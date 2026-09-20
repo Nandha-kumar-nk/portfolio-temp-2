@@ -344,8 +344,8 @@ export function AboutScene({
                 <img
                   src={aboutPersonImg}
                   alt="Nandhakumar - The Person Behind The Universe"
-                  className={`w-full h-full object-cover object-[center_30%] transition-all duration-500 ${
-                    isHoveringCard ? 'scale-[1.03] brightness-105 contrast-105' : 'scale-100 brightness-95'
+                  className={`w-full h-full object-cover object-center transition-all duration-500 ${
+                    isHoveringCard ? 'scale-[1.02] brightness-105 contrast-105' : 'scale-100 brightness-100'
                   }`}
                 />
 
