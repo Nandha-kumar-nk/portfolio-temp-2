@@ -1,0 +1,647 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- Layer 1: Distant Vista -->
+  
+
+  <defs>
+    <!-- Sky Gradient inside circular window -->
+    <radialGradient id="skyGrad" cx="65%" cy="35%" r="75%">
+      <stop offset="0%" stop-color="#0e1e38" />
+      <stop offset="40%" stop-color="#081326" />
+      <stop offset="75%" stop-color="#030814" />
+      <stop offset="100%" stop-color="#01040a" />
+    </radialGradient>
+
+    <!-- Moon Corona and Surface Gradients -->
+    <radialGradient id="moonCorona" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.5" />
+      <stop offset="35%" stop-color="#0284c7" stop-opacity="0.25" />
+      <stop offset="70%" stop-color="#0369a1" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="moonBody" cx="42%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="65%" stop-color="#e0f2fe" />
+      <stop offset="85%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#7dd3fc" />
+    </radialGradient>
+
+    <!-- Lake Reflection Gradient -->
+    <linearGradient id="lakeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#05152a" />
+      <stop offset="50%" stop-color="#040e1c" />
+      <stop offset="100%" stop-color="#02060e" />
+    </linearGradient>
+
+    <!-- Moon Reflection Shimmer -->
+    <linearGradient id="moonReflectionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.45" />
+      <stop offset="30%" stop-color="#38bdf8" stop-opacity="0.25" />
+      <stop offset="70%" stop-color="#0284c7" stop-opacity="0.12" />
+      <stop offset="100%" stop-color="#0369a1" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Waterfall Glow -->
+    <linearGradient id="waterfallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#a5f3fc" stop-opacity="0.95" />
+      <stop offset="40%" stop-color="#38bdf8" stop-opacity="0.8" />
+      <stop offset="80%" stop-color="#0284c7" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#bae6fd" stop-opacity="0.9" />
+    </linearGradient>
+
+    <!-- Mountain Rim Light -->
+    <linearGradient id="rimLightGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8" />
+      <stop offset="30%" stop-color="#0284c7" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#0369a1" stop-opacity="0" />
+    </linearGradient>
+
+    <clipPath id="portalClip">
+      <circle cx="1260" cy="510" r="430" />
+    </clipPath>
+
+    <filter id="glowSubtle" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="bloomDeep" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="24" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g clip-path="url(#portalClip)">
+    <!-- Sky Backdrop -->
+    <rect x="830" y="80" width="860" height="860" fill="url(#skyGrad)" />
+
+    <!-- Nebula Cloud Layers -->
+    <ellipse cx="1340" cy="350" rx="320" ry="160" fill="#0369a1" opacity="0.18" filter="url(#bloomDeep)" />
+    <ellipse cx="1140" cy="290" rx="260" ry="120" fill="#4338ca" opacity="0.12" filter="url(#bloomDeep)" />
+
+    <!-- Starfield -->
+    <circle cx="1313.3" cy="700.1" r="1.4" fill="#e0f2fe" opacity="0.34" />
+<circle cx="1501.5" cy="690.8" r="1.0" fill="#e0f2fe" opacity="0.82" />
+<circle cx="987.1" cy="196.1" r="1.5" fill="#cbd5e1" opacity="0.88" />
+<circle cx="1098.7" cy="505.5" r="1.5" fill="#e0f2fe" opacity="0.33" />
+<circle cx="1482.1" cy="452.4" r="1.6" fill="#e0f2fe" opacity="0.38" />
+<circle cx="1238.8" cy="231.9" r="1.8" fill="#e0f2fe" opacity="0.43" />
+<circle cx="1486.3" cy="324.4" r="0.5" fill="#38bdf8" opacity="0.99" />
+<circle cx="1641.7" cy="343.1" r="1.5" fill="#cbd5e1" opacity="0.35" />
+<circle cx="1502.5" cy="831.6" r="1.1" fill="#38bdf8" opacity="0.64" />
+<circle cx="1355.4" cy="356.7" r="1.3" fill="#e0f2fe" opacity="0.69" />
+<circle cx="1320.0" cy="736.9" r="2.0" fill="#e0f2fe" opacity="0.62" />
+<circle cx="1096.0" cy="623.3" r="1.4" fill="#e0f2fe" opacity="0.43" />
+<circle cx="1227.4" cy="402.8" r="0.9" fill="#cbd5e1" opacity="0.97" />
+<circle cx="1169.2" cy="510.4" r="1.4" fill="#cbd5e1" opacity="0.43" />
+<circle cx="1485.2" cy="323.5" r="1.1" fill="#e0f2fe" opacity="0.67" />
+<circle cx="1084.3" cy="493.9" r="1.6" fill="#cbd5e1" opacity="0.39" />
+<circle cx="1547.6" cy="502.0" r="1.3" fill="#e0f2fe" opacity="0.87" />
+<circle cx="1320.3" cy="488.6" r="1.7" fill="#38bdf8" opacity="0.69" />
+<circle cx="1633.6" cy="553.7" r="1.7" fill="#e0f2fe" opacity="0.38" />
+<circle cx="1452.5" cy="520.1" r="1.1" fill="#e0f2fe" opacity="0.86" />
+<circle cx="1494.1" cy="467.7" r="1.5" fill="#cbd5e1" opacity="0.54" />
+<circle cx="1276.6" cy="225.0" r="1.5" fill="#cbd5e1" opacity="0.81" />
+<circle cx="1146.7" cy="261.0" r="1.8" fill="#cbd5e1" opacity="0.91" />
+<circle cx="1391.0" cy="862.4" r="1.4" fill="#38bdf8" opacity="0.39" />
+<circle cx="1436.3" cy="595.8" r="0.9" fill="#38bdf8" opacity="0.87" />
+<circle cx="1569.2" cy="607.9" r="0.7" fill="#cbd5e1" opacity="0.49" />
+<circle cx="1216.3" cy="325.3" r="1.3" fill="#e0f2fe" opacity="0.88" />
+<circle cx="1013.5" cy="774.4" r="1.9" fill="#e0f2fe" opacity="0.86" />
+<circle cx="1102.4" cy="668.4" r="0.9" fill="#38bdf8" opacity="0.95" />
+<circle cx="969.9" cy="576.6" r="1.0" fill="#e0f2fe" opacity="0.61" />
+<circle cx="1344.4" cy="790.8" r="0.8" fill="#e0f2fe" opacity="0.48" />
+<circle cx="1102.9" cy="688.8" r="1.4" fill="#e0f2fe" opacity="0.42" />
+<circle cx="1522.1" cy="241.6" r="1.5" fill="#e0f2fe" opacity="0.86" />
+<circle cx="1159.0" cy="853.7" r="1.6" fill="#e0f2fe" opacity="0.58" />
+<circle cx="1326.0" cy="281.7" r="1.5" fill="#e0f2fe" opacity="0.88" />
+<circle cx="1168.9" cy="896.0" r="0.6" fill="#e0f2fe" opacity="0.49" />
+<circle cx="1614.2" cy="692.5" r="1.1" fill="#38bdf8" opacity="0.47" />
+<circle cx="1252.1" cy="862.5" r="1.0" fill="#e0f2fe" opacity="0.35" />
+<circle cx="1589.7" cy="744.3" r="1.7" fill="#38bdf8" opacity="0.97" />
+<circle cx="1159.9" cy="514.5" r="0.7" fill="#e0f2fe" opacity="0.30" />
+<circle cx="1069.9" cy="136.7" r="1.1" fill="#e0f2fe" opacity="0.41" />
+<circle cx="1351.3" cy="239.1" r="0.8" fill="#e0f2fe" opacity="0.94" />
+<circle cx="891.9" cy="697.0" r="1.0" fill="#e0f2fe" opacity="0.35" />
+<circle cx="1032.2" cy="589.3" r="1.2" fill="#cbd5e1" opacity="0.98" />
+<circle cx="1041.2" cy="522.3" r="1.2" fill="#cbd5e1" opacity="0.85" />
+<circle cx="1113.0" cy="314.1" r="1.5" fill="#cbd5e1" opacity="0.50" />
+<circle cx="890.2" cy="575.7" r="1.9" fill="#e0f2fe" opacity="0.37" />
+<circle cx="1424.9" cy="769.5" r="1.6" fill="#e0f2fe" opacity="0.79" />
+<circle cx="1237.3" cy="413.6" r="1.8" fill="#cbd5e1" opacity="0.41" />
+<circle cx="1025.1" cy="526.5" r="1.4" fill="#e0f2fe" opacity="0.37" />
+<circle cx="1552.7" cy="246.1" r="1.1" fill="#e0f2fe" opacity="0.49" />
+<circle cx="1538.6" cy="329.0" r="1.6" fill="#e0f2fe" opacity="0.59" />
+<circle cx="1654.3" cy="618.8" r="1.6" fill="#e0f2fe" opacity="0.37" />
+<circle cx="1286.7" cy="504.5" r="1.6" fill="#e0f2fe" opacity="0.34" />
+<circle cx="1148.6" cy="651.1" r="1.5" fill="#e0f2fe" opacity="0.99" />
+<circle cx="1106.6" cy="851.8" r="0.8" fill="#38bdf8" opacity="0.34" />
+<circle cx="1547.4" cy="473.3" r="1.9" fill="#e0f2fe" opacity="0.47" />
+<circle cx="1097.8" cy="293.3" r="1.8" fill="#38bdf8" opacity="0.71" />
+<circle cx="977.2" cy="736.7" r="1.3" fill="#cbd5e1" opacity="0.63" />
+<circle cx="1613.0" cy="694.4" r="1.9" fill="#cbd5e1" opacity="0.93" />
+<circle cx="1572.0" cy="453.0" r="0.9" fill="#e0f2fe" opacity="0.45" />
+<circle cx="1465.9" cy="390.9" r="0.9" fill="#e0f2fe" opacity="0.97" />
+<circle cx="1256.0" cy="365.7" r="1.6" fill="#38bdf8" opacity="0.66" />
+<circle cx="1448.6" cy="294.2" r="1.0" fill="#e0f2fe" opacity="0.68" />
+<circle cx="1473.4" cy="405.4" r="1.7" fill="#e0f2fe" opacity="0.63" />
+<circle cx="1065.3" cy="861.6" r="1.7" fill="#e0f2fe" opacity="0.57" />
+<circle cx="1023.3" cy="582.2" r="1.4" fill="#38bdf8" opacity="0.53" />
+<circle cx="1307.4" cy="841.2" r="0.8" fill="#e0f2fe" opacity="0.51" />
+<circle cx="1253.3" cy="929.2" r="1.3" fill="#cbd5e1" opacity="0.30" />
+<circle cx="1511.8" cy="379.1" r="1.8" fill="#cbd5e1" opacity="0.46" />
+<circle cx="886.9" cy="573.0" r="0.7" fill="#e0f2fe" opacity="0.82" />
+<circle cx="1026.7" cy="650.7" r="0.5" fill="#38bdf8" opacity="0.42" />
+<circle cx="1175.5" cy="869.8" r="2.0" fill="#cbd5e1" opacity="0.52" />
+<circle cx="1125.2" cy="221.0" r="1.8" fill="#e0f2fe" opacity="0.93" />
+<circle cx="1079.0" cy="412.5" r="1.6" fill="#cbd5e1" opacity="0.96" />
+<circle cx="1022.1" cy="824.1" r="1.9" fill="#e0f2fe" opacity="0.69" />
+<circle cx="1571.6" cy="398.3" r="0.7" fill="#38bdf8" opacity="0.42" />
+<circle cx="1109.9" cy="134.4" r="1.2" fill="#e0f2fe" opacity="0.80" />
+<circle cx="1015.4" cy="750.2" r="1.5" fill="#e0f2fe" opacity="0.47" />
+<circle cx="1309.3" cy="442.6" r="1.7" fill="#cbd5e1" opacity="0.38" />
+<circle cx="1219.2" cy="616.2" r="1.3" fill="#e0f2fe" opacity="0.38" />
+<circle cx="1660.1" cy="546.3" r="1.7" fill="#cbd5e1" opacity="0.61" />
+<circle cx="1165.2" cy="424.4" r="1.9" fill="#e0f2fe" opacity="0.46" />
+<circle cx="1325.8" cy="390.1" r="1.0" fill="#38bdf8" opacity="0.61" />
+<circle cx="1480.0" cy="585.0" r="1.6" fill="#e0f2fe" opacity="0.50" />
+<circle cx="1066.1" cy="870.8" r="1.6" fill="#cbd5e1" opacity="0.42" />
+<circle cx="984.9" cy="777.2" r="1.5" fill="#e0f2fe" opacity="0.61" />
+<circle cx="1591.9" cy="334.6" r="2.0" fill="#cbd5e1" opacity="0.52" />
+<circle cx="1135.5" cy="426.4" r="0.6" fill="#e0f2fe" opacity="0.59" />
+<circle cx="1109.2" cy="876.7" r="1.8" fill="#38bdf8" opacity="0.52" />
+<circle cx="1219.5" cy="882.2" r="1.9" fill="#38bdf8" opacity="0.40" />
+<circle cx="1513.0" cy="688.6" r="0.5" fill="#e0f2fe" opacity="0.89" />
+<circle cx="1542.2" cy="666.3" r="1.4" fill="#e0f2fe" opacity="0.58" />
+<circle cx="1216.0" cy="850.8" r="1.2" fill="#38bdf8" opacity="0.44" />
+<circle cx="1198.9" cy="920.0" r="1.3" fill="#e0f2fe" opacity="0.68" />
+<circle cx="907.5" cy="363.8" r="1.0" fill="#e0f2fe" opacity="0.55" />
+<circle cx="955.3" cy="639.2" r="0.9" fill="#e0f2fe" opacity="0.54" />
+<circle cx="1264.6" cy="244.0" r="1.4" fill="#38bdf8" opacity="0.51" />
+<circle cx="906.4" cy="465.8" r="0.9" fill="#e0f2fe" opacity="0.51" />
+<circle cx="1638.8" cy="363.6" r="0.9" fill="#e0f2fe" opacity="0.34" />
+<circle cx="1282.7" cy="109.9" r="1.3" fill="#38bdf8" opacity="0.96" />
+<circle cx="1604.0" cy="278.6" r="0.7" fill="#38bdf8" opacity="0.88" />
+<circle cx="1114.1" cy="317.7" r="1.1" fill="#e0f2fe" opacity="0.90" />
+<circle cx="1055.5" cy="539.4" r="1.4" fill="#e0f2fe" opacity="0.94" />
+<circle cx="1373.5" cy="736.9" r="0.6" fill="#38bdf8" opacity="0.39" />
+<circle cx="1280.8" cy="682.7" r="0.9" fill="#e0f2fe" opacity="0.45" />
+<circle cx="1179.3" cy="444.3" r="0.8" fill="#e0f2fe" opacity="0.62" />
+<circle cx="1071.4" cy="263.6" r="1.9" fill="#38bdf8" opacity="0.55" />
+<circle cx="1528.1" cy="472.1" r="0.6" fill="#e0f2fe" opacity="0.35" />
+<circle cx="893.1" cy="558.0" r="1.2" fill="#e0f2fe" opacity="0.46" />
+<circle cx="1557.6" cy="578.6" r="1.6" fill="#e0f2fe" opacity="0.64" />
+<circle cx="881.6" cy="423.1" r="1.2" fill="#cbd5e1" opacity="0.97" />
+<circle cx="1626.3" cy="362.2" r="1.8" fill="#e0f2fe" opacity="0.58" />
+<circle cx="1283.0" cy="753.0" r="0.7" fill="#e0f2fe" opacity="0.80" />
+<circle cx="1292.6" cy="809.2" r="1.9" fill="#e0f2fe" opacity="0.41" />
+<circle cx="1339.0" cy="437.9" r="1.4" fill="#e0f2fe" opacity="0.86" />
+<circle cx="1266.3" cy="191.1" r="1.4" fill="#cbd5e1" opacity="0.42" />
+<circle cx="954.6" cy="730.1" r="1.7" fill="#cbd5e1" opacity="0.88" />
+<circle cx="1399.4" cy="783.3" r="1.4" fill="#38bdf8" opacity="0.33" />
+<circle cx="1167.3" cy="637.5" r="1.1" fill="#e0f2fe" opacity="0.39" />
+<circle cx="1331.8" cy="655.0" r="1.4" fill="#e0f2fe" opacity="0.66" />
+<circle cx="1583.8" cy="613.8" r="1.7" fill="#e0f2fe" opacity="0.96" />
+<circle cx="1065.8" cy="261.9" r="2.0" fill="#cbd5e1" opacity="0.44" />
+<circle cx="1106.7" cy="229.0" r="1.9" fill="#38bdf8" opacity="0.66" />
+<circle cx="1193.7" cy="218.6" r="1.0" fill="#e0f2fe" opacity="0.94" />
+<circle cx="1409.3" cy="757.0" r="0.9" fill="#e0f2fe" opacity="0.53" />
+<circle cx="1143.5" cy="149.9" r="1.0" fill="#e0f2fe" opacity="0.93" />
+<circle cx="1234.5" cy="499.9" r="0.5" fill="#e0f2fe" opacity="0.74" />
+<circle cx="1436.6" cy="241.7" r="1.2" fill="#e0f2fe" opacity="0.59" />
+<circle cx="1466.1" cy="556.7" r="0.8" fill="#e0f2fe" opacity="0.80" />
+<circle cx="1293.6" cy="778.6" r="1.8" fill="#e0f2fe" opacity="0.95" />
+<circle cx="1527.0" cy="782.6" r="0.6" fill="#e0f2fe" opacity="0.92" />
+<circle cx="926.7" cy="507.7" r="1.6" fill="#38bdf8" opacity="0.95" />
+<circle cx="1413.5" cy="631.8" r="1.5" fill="#e0f2fe" opacity="0.51" />
+<circle cx="1268.6" cy="878.6" r="1.3" fill="#e0f2fe" opacity="1.00" />
+<circle cx="1389.0" cy="512.1" r="1.8" fill="#e0f2fe" opacity="0.33" />
+<circle cx="1056.6" cy="711.7" r="1.1" fill="#e0f2fe" opacity="0.54" />
+
+
+    <!-- Large Realistic Glowing Moon -->
+    <!-- Moon Position: cx: 1420, cy: 330, r: 88 -->
+    <!-- Corona Glow -->
+    <circle cx="1420" cy="330" r="240" fill="url(#moonCorona)" />
+    <circle cx="1420" cy="330" r="140" fill="#38bdf8" opacity="0.2" filter="url(#bloomDeep)" />
+
+    <!-- Moon Disc -->
+    <circle cx="1420" cy="330" r="88" fill="url(#moonBody)" filter="url(#glowSubtle)" />
+
+    <!-- Realistic Lunar Maria (Dark Basalt Plains on Moon) -->
+    <g opacity="0.22" fill="#0f2b48">
+      <!-- Oceanus Procellarum -->
+      <path d="M 1375 295 Q 1390 280 1410 290 Q 1425 310 1405 330 Q 1380 340 1370 320 Z" />
+      <!-- Mare Imbrium -->
+      <circle cx="1405" cy="305" r="22" />
+      <!-- Mare Serenitatis & Tranquillitatis -->
+      <circle cx="1438" cy="318" r="16" />
+      <circle cx="1445" cy="340" r="18" />
+      <!-- Mare Crisium -->
+      <ellipse cx="1472" cy="322" rx="10" ry="8" />
+      <!-- Crater Tycho with Ray System -->
+      <circle cx="1430" cy="385" r="5" fill="#ffffff" opacity="0.7" />
+      <line x1="1430" y1="385" x2="1405" y2="340" stroke="#ffffff" stroke-width="0.7" opacity="0.3" />
+      <line x1="1430" y1="385" x2="1455" y2="345" stroke="#ffffff" stroke-width="0.7" opacity="0.3" />
+      <line x1="1430" y1="385" x2="1435" y2="405" stroke="#ffffff" stroke-width="0.6" opacity="0.3" />
+    </g>
+
+    <!-- Mountain Layer 3: Far Distance (Deep atmospheric silhouette) -->
+    <path d="M 800 580 Q 950 490 1080 540 Q 1200 460 1340 520 Q 1460 470 1620 530 Q 1720 500 1780 550 L 1780 1000 L 800 1000 Z" fill="#061324" opacity="0.85" />
+    <path d="M 800 580 Q 950 490 1080 540 Q 1200 460 1340 520 Q 1460 470 1620 530 Q 1720 500 1780 550" stroke="#38bdf8" stroke-width="1.2" fill="none" opacity="0.35" />
+
+    <!-- Mountain Layer 2: Mid-Distance Jagged Peaks with Moonlight Rim Light -->
+    <path d="M 820 620 L 910 570 L 980 610 L 1090 530 L 1180 590 L 1260 520 L 1360 580 L 1480 495 L 1570 560 L 1680 510 L 1760 580 L 1760 1000 L 820 1000 Z" fill="#040b17" />
+    <!-- Moonlight Rim Lighting -->
+    <path d="M 820 620 L 910 570 L 980 610 L 1090 530 L 1180 590 L 1260 520 L 1360 580 L 1480 495 L 1570 560 L 1680 510 L 1760 580" stroke="#7dd3fc" stroke-width="2.2" fill="none" opacity="0.65" filter="url(#glowSubtle)" />
+
+    <!-- Distant Cyber Pagoda on Cliff Ridge (Right Side: x ~ 1580, y ~ 460) -->
+    <g transform="translate(1550, 460) scale(0.65)">
+      <!-- Pagoda Base -->
+      <rect x="25" y="65" width="30" height="25" fill="#02060d" />
+      <!-- Tier 1 -->
+      <path d="M 10 65 Q 40 55 70 65 L 62 50 Q 40 45 18 50 Z" fill="#07182c" stroke="#22d3ee" stroke-width="1.2" />
+      <line x1="10" y1="65" x2="70" y2="65" stroke="#38bdf8" stroke-width="1.8" filter="url(#glowSubtle)" />
+      <!-- Tier 2 -->
+      <path d="M 18 50 Q 40 42 62 50 L 55 36 Q 40 32 25 36 Z" fill="#07182c" stroke="#22d3ee" stroke-width="1.2" />
+      <line x1="18" y1="50" x2="62" y2="50" stroke="#38bdf8" stroke-width="1.6" filter="url(#glowSubtle)" />
+      <!-- Tier 3 -->
+      <path d="M 25 36 Q 40 28 55 36 L 48 24 Q 40 20 32 24 Z" fill="#07182c" stroke="#22d3ee" stroke-width="1.2" />
+      <line x1="25" y1="36" x2="55" y2="36" stroke="#38bdf8" stroke-width="1.5" filter="url(#glowSubtle)" />
+      <!-- Spire / Finial with Beacon -->
+      <line x1="40" y1="20" x2="40" y2="5" stroke="#22d3ee" stroke-width="2" />
+      <circle cx="40" cy="5" r="3.5" fill="#38bdf8" filter="url(#bloomDeep)" />
+    </g>
+
+    <!-- Mountain Layer 1: Near Cliffs with Luminous Cyber Waterfalls -->
+    <!-- Cliff Peninsula Left -->
+    <path d="M 830 700 Q 940 640 1020 680 L 1060 740 L 1030 840 L 830 840 Z" fill="#030811" />
+    <path d="M 830 700 Q 940 640 1020 680 L 1060 740" stroke="#38bdf8" stroke-width="1.5" fill="none" opacity="0.5" />
+
+    <!-- Cliff Peninsula Right with Cascading Waterfall -->
+    <path d="M 1160 630 Q 1280 610 1380 645 L 1400 700 L 1380 770 L 1140 770 Z" fill="#02060f" />
+    
+    <!-- Cascading Cyber Waterfalls (Main Stream falling from 1240, 620 down to lake at 740) -->
+    <g filter="url(#glowSubtle)">
+      <!-- Main Waterfall Stream -->
+      <path d="M 1245 625 C 1248 660, 1243 700, 1246 735" stroke="url(#waterfallGrad)" stroke-width="6" fill="none" opacity="0.9" />
+      <path d="M 1251 630 C 1255 665, 1250 705, 1253 738" stroke="url(#waterfallGrad)" stroke-width="4" fill="none" opacity="0.85" />
+      <path d="M 1239 635 C 1241 670, 1238 710, 1240 736" stroke="url(#waterfallGrad)" stroke-width="3" fill="none" opacity="0.75" />
+      
+      <!-- Second Tier Waterfall Stream -->
+      <path d="M 1280 640 C 1283 670, 1279 705, 1282 735" stroke="url(#waterfallGrad)" stroke-width="4.5" fill="none" opacity="0.8" />
+      
+      <!-- Waterfall Base Spray / Luminous Mist Cloud -->
+      <ellipse cx="1255" cy="738" rx="35" ry="12" fill="#38bdf8" opacity="0.45" filter="url(#bloomDeep)" />
+      <ellipse cx="1255" cy="738" rx="20" ry="7" fill="#e0f2fe" opacity="0.7" />
+    </g>
+
+    <!-- Lake Basin (Calm Reflective Mirror Water) -->
+    <rect x="800" y="725" width="950" height="260" fill="url(#lakeGrad)" />
+
+    <!-- Lunar Light Trail Reflection in Lake -->
+    <ellipse cx="1400" cy="780" rx="45" ry="50" fill="url(#moonReflectionGrad)" />
+    <!-- Horizontal Reflection Shimmer Lines on Water -->
+    <g stroke="#38bdf8" opacity="0.4" stroke-linecap="round">
+      <line x1="1360" y1="745" x2="1440" y2="745" stroke-width="1.8" />
+      <line x1="1340" y1="755" x2="1460" y2="755" stroke-width="2.2" />
+      <line x1="1330" y1="768" x2="1475" y2="768" stroke-width="2.6" />
+      <line x1="1320" y1="782" x2="1485" y2="782" stroke-width="2.2" />
+      <line x1="1345" y1="798" x2="1465" y2="798" stroke-width="1.8" />
+      <line x1="1370" y1="815" x2="1440" y2="815" stroke-width="1.4" />
+    </g>
+
+    <!-- Cyber Torii Gate in the Reflective Water (Left/Center: x ~ 1080, y ~ 715) -->
+    <g transform="translate(1060, 700) scale(0.75)">
+      <!-- Upper Main Beam (Kasagi) with Upward Curved Ends -->
+      <path d="M 0 15 Q 40 10 80 15 L 77 9 Q 40 4 3 9 Z" fill="#040e1c" stroke="#22d3ee" stroke-width="1.8" filter="url(#glowSubtle)" />
+      <!-- Secondary Beam (Nuki) -->
+      <rect x="6" y="24" width="68" height="4.5" fill="#040e1c" stroke="#00f5ff" stroke-width="1.5" />
+      <!-- Left Pillar (Hashira) -->
+      <rect x="18" y="15" width="6" height="42" fill="#030913" stroke="#22d3ee" stroke-width="1.2" />
+      <!-- Right Pillar (Hashira) -->
+      <rect x="56" y="15" width="6" height="42" fill="#030913" stroke="#22d3ee" stroke-width="1.2" />
+      <!-- Glowing Core Seal in Center -->
+      <circle cx="40" cy="19.5" r="3" fill="#38bdf8" filter="url(#glowSubtle)" />
+      
+      <!-- Reflection of Torii in Water below -->
+      <g opacity="0.3" transform="scale(1, -0.6) translate(0, -96)">
+        <path d="M 0 15 Q 40 10 80 15 L 77 9 Q 40 4 3 9 Z" fill="#22d3ee" />
+        <rect x="18" y="15" width="6" height="35" fill="#38bdf8" />
+        <rect x="56" y="15" width="6" height="35" fill="#38bdf8" />
+      </g>
+    </g>
+
+    <!-- Low Ambient Mist Horizon -->
+    <rect x="800" y="710" width="950" height="30" fill="#38bdf8" opacity="0.08" filter="url(#bloomDeep)" />
+  </g>
+
+
+  
+  <!-- Layer 2: Portal Aperture & Bonsai -->
+  
+
+  <defs>
+    <!-- Metallic Rim Shading -->
+    <linearGradient id="metalBezel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#243247" />
+      <stop offset="30%" stop-color="#151e2e" />
+      <stop offset="60%" stop-color="#0a101b" />
+      <stop offset="100%" stop-color="#1e2c40" />
+    </linearGradient>
+
+    <!-- Neon Cyan Track Pulse -->
+    <linearGradient id="neonTrack" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#00f5ff" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+
+    <!-- Sakura Bark Shading -->
+    <linearGradient id="sakuraWood" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1c1917" />
+      <stop offset="50%" stop-color="#292524" />
+      <stop offset="100%" stop-color="#0c0a09" />
+    </linearGradient>
+
+    <filter id="portalBloom" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="sakuraGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Massive Stepped Portal Window Frame -->
+  <!-- Center: 1260, 510, Radius: 430 -->
+  <g>
+    <!-- Outer Heavy Wall Aperture Cutout -->
+    <!-- Dark Architectural Wall Facade with Chamfer Bevel -->
+    <circle cx="1260" cy="510" r="468" stroke="url(#metalBezel)" stroke-width="18" fill="none" opacity="0.95" />
+    
+    <!-- Primary Outer Carbon Bevel -->
+    <circle cx="1260" cy="510" r="452" stroke="#0b1320" stroke-width="14" fill="none" />
+    
+    <!-- Concentric Cyan Neon Ring Track 1 -->
+    <circle cx="1260" cy="510" r="442" stroke="url(#neonTrack)" stroke-width="3" fill="none" opacity="0.9" filter="url(#portalBloom)" />
+    
+    <!-- Stepped Middle Carbon Segment Track with Architectural Dividers -->
+    <circle cx="1260" cy="510" r="436" stroke="#0f1c2e" stroke-width="9" fill="none" />
+    
+    <!-- Concentric Cyan Neon Ring Track 2 (Inner High-Glow Ring) -->
+    <circle cx="1260" cy="510" r="430" stroke="#22d3ee" stroke-width="3.5" fill="none" opacity="0.95" filter="url(#portalBloom)" />
+    
+    <!-- Radial Alignment Nodes / HUD Markings on Portal Rim -->
+    <g stroke="#00f5ff" stroke-width="2" opacity="0.85">
+      <!-- 12 O'Clock -->
+      <line x1="1260" y1="64" x2="1260" y2="76" />
+      <!-- 3 O'Clock -->
+      <line x1="1694" y1="510" x2="1706" y2="510" />
+      <!-- 6 O'Clock -->
+      <line x1="1260" y1="944" x2="1260" y2="956" />
+      <!-- 9 O'Clock -->
+      <line x1="814" y1="510" x2="826" y2="510" />
+      
+      <!-- 45-degree Tech Nodes -->
+      <circle cx="1564.01" cy="205.99" r="3.5" fill="#38bdf8" />
+      <circle cx="955.99" cy="205.99" r="3.5" fill="#38bdf8" />
+      <circle cx="1564.01" cy="814.01" r="3.5" fill="#38bdf8" />
+      <circle cx="955.99" cy="814.01" r="3.5" fill="#38bdf8" />
+    </g>
+
+    <!-- Inner Edge Moonlight Specular Catch -->
+    <circle cx="1260" cy="510" r="428" stroke="#bae6fd" stroke-width="1.2" fill="none" opacity="0.45" />
+  </g>
+
+  <!-- Elegant Sakura Bonsai Tree Branches Draping Over Upper Portal Arc -->
+  <g id="sakura-branch">
+    <!-- Main Gnarled Branch coming from Top Right Exterior -->
+    <path d="M 1750 180 Q 1620 220 1520 230 Q 1420 240 1340 190 Q 1280 150 1200 170 Q 1150 185 1100 230" stroke="url(#sakuraWood)" stroke-width="24" stroke-linecap="round" fill="none" />
+    <path d="M 1750 180 Q 1620 220 1520 230 Q 1420 240 1340 190 Q 1280 150 1200 170 Q 1150 185 1100 230" stroke="#44403c" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.4" />
+    
+    <!-- Secondary Curved Twigs Draping Down into the Window Aperture -->
+    <path d="M 1440 235 Q 1410 290 1390 350 Q 1380 390 1350 420" stroke="url(#sakuraWood)" stroke-width="10" stroke-linecap="round" fill="none" />
+    <path d="M 1340 190 Q 1320 240 1270 270 Q 1240 290 1220 340" stroke="url(#sakuraWood)" stroke-width="8" stroke-linecap="round" fill="none" />
+    <path d="M 1200 170 Q 1180 210 1140 235" stroke="url(#sakuraWood)" stroke-width="6" stroke-linecap="round" fill="none" />
+    <path d="M 1520 230 Q 1560 280 1590 320" stroke="url(#sakuraWood)" stroke-width="9" stroke-linecap="round" fill="none" />
+
+    <!-- Delicate Sakura Blossom Clusters (Pink blossoms with luminous centers) -->
+    <!-- Helper macro for sakura blossom in SVG -->
+    <!-- Cluster 1: near 1350, 420 -->
+    <g transform="translate(1350, 420)" filter="url(#sakuraGlow)">
+      <circle cx="-6" cy="-4" r="7" fill="#fbcfe8" opacity="0.9" />
+      <circle cx="6" cy="-4" r="7" fill="#f472b6" opacity="0.85" />
+      <circle cx="0" cy="7" r="7" fill="#fda4af" opacity="0.9" />
+      <circle cx="-7" cy="5" r="6" fill="#fbcfe8" opacity="0.8" />
+      <circle cx="7" cy="5" r="6" fill="#f472b6" opacity="0.8" />
+      <circle cx="0" cy="1" r="3" fill="#ffe4e6" />
+    </g>
+
+    <g transform="translate(1385, 360)" filter="url(#sakuraGlow)">
+      <circle cx="-5" cy="-5" r="8" fill="#fbcfe8" opacity="0.95" />
+      <circle cx="6" cy="-4" r="8" fill="#f472b6" opacity="0.9" />
+      <circle cx="0" cy="7" r="8" fill="#fbcfe8" opacity="0.9" />
+      <circle cx="0" cy="1" r="3.5" fill="#ffffff" />
+    </g>
+
+    <!-- Cluster 2: near 1270, 270 -->
+    <g transform="translate(1270, 270)" filter="url(#sakuraGlow)">
+      <circle cx="-7" cy="-5" r="9" fill="#fbcfe8" opacity="0.95" />
+      <circle cx="7" cy="-5" r="9" fill="#f472b6" opacity="0.9" />
+      <circle cx="0" cy="8" r="9" fill="#fda4af" opacity="0.9" />
+      <circle cx="-8" cy="6" r="7" fill="#fbcfe8" opacity="0.85" />
+      <circle cx="8" cy="6" r="7" fill="#f472b6" opacity="0.85" />
+      <circle cx="0" cy="1" r="4" fill="#ffffff" />
+    </g>
+
+    <g transform="translate(1220, 340)" filter="url(#sakuraGlow)">
+      <circle cx="-5" cy="-5" r="7" fill="#fbcfe8" opacity="0.9" />
+      <circle cx="5" cy="-4" r="7" fill="#f472b6" opacity="0.85" />
+      <circle cx="0" cy="6" r="7" fill="#fda4af" opacity="0.9" />
+      <circle cx="0" cy="1" r="3" fill="#ffe4e6" />
+    </g>
+
+    <!-- Cluster 3: near 1440, 235 & 1520, 230 -->
+    <g transform="translate(1440, 235)" filter="url(#sakuraGlow)">
+      <circle cx="-8" cy="-6" r="10" fill="#fbcfe8" opacity="0.95" />
+      <circle cx="8" cy="-6" r="10" fill="#f472b6" opacity="0.9" />
+      <circle cx="0" cy="9" r="10" fill="#fda4af" opacity="0.95" />
+      <circle cx="0" cy="1" r="4.5" fill="#ffffff" />
+    </g>
+
+    <g transform="translate(1520, 230)" filter="url(#sakuraGlow)">
+      <circle cx="-9" cy="-7" r="11" fill="#fbcfe8" opacity="0.95" />
+      <circle cx="9" cy="-7" r="11" fill="#f472b6" opacity="0.9" />
+      <circle cx="0" cy="10" r="11" fill="#fda4af" opacity="0.95" />
+      <circle cx="0" cy="1" r="5" fill="#ffffff" />
+    </g>
+
+    <g transform="translate(1590, 320)" filter="url(#sakuraGlow)">
+      <circle cx="-6" cy="-5" r="8" fill="#fbcfe8" opacity="0.9" />
+      <circle cx="6" cy="-5" r="8" fill="#f472b6" opacity="0.85" />
+      <circle cx="0" cy="7" r="8" fill="#fda4af" opacity="0.9" />
+      <circle cx="0" cy="1" r="3.5" fill="#ffffff" />
+    </g>
+
+    <g transform="translate(1140, 235)" filter="url(#sakuraGlow)">
+      <circle cx="-6" cy="-4" r="8" fill="#fbcfe8" opacity="0.9" />
+      <circle cx="6" cy="-4" r="8" fill="#f472b6" opacity="0.85" />
+      <circle cx="0" cy="6" r="8" fill="#fda4af" opacity="0.9" />
+      <circle cx="0" cy="1" r="3.5" fill="#ffffff" />
+    </g>
+  </g>
+
+
+
+  <!-- Layer 3: Character & Interior -->
+  
+
+  <defs>
+    <!-- Hoodie Fabric Shading -->
+    <linearGradient id="hoodieBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e2430" />
+      <stop offset="50%" stop-color="#141923" />
+      <stop offset="100%" stop-color="#0a0d14" />
+    </linearGradient>
+
+    <!-- Hoodie Creases and Rim Shadows -->
+    <linearGradient id="hoodieShadow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0f131a" />
+      <stop offset="50%" stop-color="#1a212d" />
+      <stop offset="100%" stop-color="#090c12" />
+    </linearGradient>
+
+    <!-- Tatami Floor Wood Shading -->
+    <linearGradient id="tatamiFloor" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#080c14" />
+      <stop offset="40%" stop-color="#05080e" />
+      <stop offset="100%" stop-color="#020306" />
+    </linearGradient>
+
+    <!-- Bench Material -->
+    <linearGradient id="benchGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a3447" />
+      <stop offset="60%" stop-color="#161c28" />
+      <stop offset="100%" stop-color="#0a0d14" />
+    </linearGradient>
+
+    <!-- Warm Andon Lantern Core -->
+    <radialGradient id="andonGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="25%" stop-color="#f59e0b" stop-opacity="0.9" />
+      <stop offset="65%" stop-color="#b45309" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#78350f" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Intense NU Neon Glow Filter -->
+    <filter id="nuGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur1" />
+      <feGaussianBlur stdDeviation="8" result="blur2" />
+      <feGaussianBlur stdDeviation="16" result="blur3" />
+      <feMerge>
+        <feMergeNode in="blur3" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="lanternBloom" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="28" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Sanctuary Room Interior Walls & Floor -->
+  <!-- Left Interior Architectural Slats / Dark Wall Paneling -->
+  <rect x="0" y="0" width="760" height="1080" fill="#050810" />
+  
+  <!-- Subtle Vertical Tech Grid / Japanese Shōji Inspired Slats on Left Wall -->
+  <g stroke="#0e1726" stroke-width="2" opacity="0.6">
+    <line x1="80" y1="0" x2="80" y2="760" />
+    <line x1="180" y1="0" x2="180" y2="760" />
+    <line x1="280" y1="0" x2="280" y2="760" />
+    <line x1="380" y1="0" x2="380" y2="760" />
+    <line x1="480" y1="0" x2="480" y2="760" />
+    <line x1="580" y1="0" x2="580" y2="760" />
+    <line x1="680" y1="0" x2="680" y2="760" />
+  </g>
+
+  <!-- Sanctuary Floor Platform (Polished dark lacquered tatami wood) -->
+  <path d="M 0 760 L 1920 760 L 1920 1080 L 0 1080 Z" fill="url(#tatamiFloor)" />
+  
+  <!-- Polished Floor Tatami Inset Seams & Cyan LED Floor Runner -->
+  <line x1="0" y1="760" x2="1920" y2="760" stroke="#00f5ff" stroke-width="2" opacity="0.45" filter="url(#nuGlow)" />
+  <line x1="0" y1="762" x2="1920" y2="762" stroke="#17253d" stroke-width="3" />
+  
+  <g stroke="#17253d" stroke-width="2" opacity="0.7">
+    <!-- Perspective Floor Tatami Lines -->
+    <line x1="200" y1="762" x2="100" y2="1080" />
+    <line x1="500" y1="762" x2="420" y2="1080" />
+    <line x1="850" y1="762" x2="800" y2="1080" />
+    <line x1="1260" y1="762" x2="1260" y2="1080" stroke="#00f5ff" opacity="0.3" stroke-dasharray="16, 12" />
+    <line x1="1650" y1="762" x2="1720" y2="1080" />
+  </g>
+
+  <!-- Cyan Reflection of Circular Portal on Polished Floor -->
+  <ellipse cx="1260" cy="820" rx="340" ry="24" fill="#00f5ff" opacity="0.08" filter="url(#lanternBloom)" />
+
+  <!-- Traditional Japanese Cyber Andon Lantern 1 (Bottom Left: x ~ 180, y ~ 800) -->
+  <g transform="translate(180, 800) scale(0.9)">
+    <!-- Ambient Warm Floor Cast -->
+    <ellipse cx="35" cy="160" rx="140" ry="45" fill="url(#andonGlow)" filter="url(#lanternBloom)" />
+    <!-- Wooden Lattice Frame -->
+    <rect x="10" y="20" width="50" height="130" fill="#080604" stroke="#451a03" stroke-width="4" rx="3" />
+    <!-- Glowing Washi Paper Core -->
+    <rect x="16" y="26" width="38" height="118" fill="url(#andonGlow)" />
+    <!-- Japanese Lattice Grid Slats -->
+    <g stroke="#291104" stroke-width="2.5">
+      <line x1="16" y1="55" x2="54" y2="55" />
+      <line x1="16" y1="85" x2="54" y2="85" />
+      <line x1="16" y1="115" x2="54" y2="115" />
+      <line x1="35" y1="26" x2="35" y2="144" />
+    </g>
+    <!-- Roof Cap & Feet -->
+    <path d="M 5 20 L 65 20 L 55 10 L 15 10 Z" fill="#1c0e06" stroke="#451a03" stroke-width="2" />
+    <rect x="8" y="150" width="10" height="12" fill="#1c0e06" />
+    <rect x="52" y="150" width="10" height="12" fill="#1c0e06" />
+  </g>
+
+  <!-- Traditional Japanese Cyber Andon Lantern 2 (Bottom Right: x ~ 1700, y ~ 810) -->
+  <g transform="translate(1690, 810) scale(0.85)">
+    <!-- Ambient Warm Floor Cast -->
+    <ellipse cx="35" cy="160" rx="120" ry="40" fill="url(#andonGlow)" filter="url(#lanternBloom)" />
+    <!-- Wooden Lattice Frame -->
+    <rect x="10" y="20" width="50" height="120" fill="#080604" stroke="#451a03" stroke-width="4" rx="3" />
+    <!-- Glowing Core -->
+    <rect x="16" y="26" width="38" height="108" fill="url(#andonGlow)" />
+    <g stroke="#291104" stroke-width="2.5">
+      <line x1="16" y1="56" x2="54" y2="56" />
+      <line x1="16" y1="86" x2="54" y2="86" />
+      <line x1="35" y1="26" x2="35" y2="134" />
+    </g>
+    <path d="M 5 20 L 65 20 L 55 10 L 15 10 Z" fill="#1c0e06" />
+  </g>
+
+  <!-- Seated Developer Character & Techwear Bench -->
+  <!-- Positioned in front of the circular portal window: cx ~ 1240, cy ~ 660 -->
+  </svg>

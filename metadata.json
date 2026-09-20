@@ -1,0 +1,6 @@
+{
+  "name": "Nandhakumar Universe",
+  "description": "Cinematic interactive 3D developer portfolio featuring real-time WebGL space environments, the Universe Core, and a futuristic Japanese sanctuary with interactive About Me showcase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
