@@ -50,9 +50,9 @@ export function GlowingPlatform({
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.02, 0]}>
         <circleGeometry args={[4.2, 64]} />
         <meshBasicMaterial
-          color="#010c1c"
+          color="#010915"
           transparent
-          opacity={0.7}
+          opacity={0.8}
           depthWrite={false}
         />
       </mesh>
@@ -62,7 +62,7 @@ export function GlowingPlatform({
       <mesh ref={ringOuterRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
         <ringGeometry args={[3.8, 3.86, 64]} />
         <meshBasicMaterial
-          color="#0ea5e9"
+          color="#168bff"
           transparent
           opacity={0.45}
           side={THREE.DoubleSide}
@@ -74,9 +74,9 @@ export function GlowingPlatform({
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.008, 0]}>
         <ringGeometry args={[3.0, 3.05, 64]} />
         <meshBasicMaterial
-          color="#06b6d4"
+          color="#19e6ff"
           transparent
-          opacity={0.6}
+          opacity={0.65}
           side={THREE.DoubleSide}
           blending={THREE.AdditiveBlending}
         />
@@ -86,9 +86,9 @@ export function GlowingPlatform({
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.015, 0]}>
         <ringGeometry args={[2.1, 2.16, 64]} />
         <meshBasicMaterial
-          color="#38bdf8"
+          color="#00d9ff"
           transparent
-          opacity={0.85}
+          opacity={0.9}
           side={THREE.DoubleSide}
           blending={THREE.AdditiveBlending}
         />
@@ -98,9 +98,9 @@ export function GlowingPlatform({
       <mesh ref={ringInnerRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.02, 0]}>
         <ringGeometry args={[1.2, 1.24, 48]} />
         <meshBasicMaterial
-          color="#00f5ff"
+          color="#5cefff"
           transparent
-          opacity={0.75}
+          opacity={0.85}
           side={THREE.DoubleSide}
           blending={THREE.AdditiveBlending}
         />
@@ -110,9 +110,9 @@ export function GlowingPlatform({
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.025, 0]}>
         <circleGeometry args={[0.75, 32]} />
         <meshBasicMaterial
-          color="#0284c7"
+          color="#00d9ff"
           transparent
-          opacity={0.5}
+          opacity={0.55}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
@@ -132,9 +132,9 @@ export function GlowingPlatform({
           >
             <boxGeometry args={[0.035, 0.005, 0.7]} />
             <meshBasicMaterial
-              color={i % 3 === 0 ? '#00f5ff' : i % 3 === 1 ? '#06b6d4' : '#818cf8'}
+              color={i % 3 === 0 ? '#f5fcff' : i % 3 === 1 ? '#00d9ff' : '#19e6ff'}
               transparent
-              opacity={0.65}
+              opacity={0.75}
               blending={THREE.AdditiveBlending}
             />
           </mesh>
@@ -146,9 +146,9 @@ export function GlowingPlatform({
         <mesh ref={coneRef}>
           <cylinderGeometry args={[1.7, 2.5, 2.4, 32, 1, true]} />
           <meshBasicMaterial
-            color="#06b6d4"
+            color="#00d9ff"
             transparent
-            opacity={0.14}
+            opacity={0.16}
             side={THREE.DoubleSide}
             blending={THREE.AdditiveBlending}
             depthWrite={false}

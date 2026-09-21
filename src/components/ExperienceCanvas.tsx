@@ -72,12 +72,12 @@ export function ExperienceCanvas({
             toneMappingExposure: 1.25,
           }}
         >
-          {/* Lights - vibrant illumination for 3D Core */}
-          <ambientLight intensity={0.8} />
-          <pointLight position={[0, 0, 5]} intensity={3.5} color="#38bdf8" />
-          <pointLight position={[4, 3, -2]} intensity={2.0} color="#818cf8" />
-          <pointLight position={[-4, -3, 2]} intensity={1.8} color="#06b6d4" />
-          <directionalLight position={[-5, 5, 5]} intensity={1.8} color="#06b6d4" />
+          {/* Lights - vibrant pure electric cyan & cool blue illumination */}
+          <ambientLight intensity={0.75} color="#041827" />
+          <pointLight position={[0, 0, 5]} intensity={3.8} color="#00d9ff" />
+          <pointLight position={[4, 3, -2]} intensity={2.2} color="#19e6ff" />
+          <pointLight position={[-4, -3, 2]} intensity={2.0} color="#168bff" />
+          <directionalLight position={[-5, 5, 5]} intensity={2.0} color="#5cefff" />
 
           {/* Cinematic Camera Controller */}
           <CinematicCamera

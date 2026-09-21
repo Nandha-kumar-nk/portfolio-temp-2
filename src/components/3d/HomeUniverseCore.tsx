@@ -110,12 +110,15 @@ export function HomeUniverseCore({
       pos[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
 
       const pick = Math.random();
-      if (pick > 0.75) {
-        col[i * 3] = 1.0; col[i * 3 + 1] = 1.0; col[i * 3 + 2] = 1.0;
-      } else if (pick > 0.35) {
-        col[i * 3] = 0.0; col[i * 3 + 1] = 0.96; col[i * 3 + 2] = 1.0;
+      if (pick > 0.7) {
+        // Pure White-Cyan Highlight
+        col[i * 3] = 0.96; col[i * 3 + 1] = 0.99; col[i * 3 + 2] = 1.0;
+      } else if (pick > 0.3) {
+        // Bright Electric Cyan (#00D9FF / #19E6FF)
+        col[i * 3] = 0.0; col[i * 3 + 1] = 0.85; col[i * 3 + 2] = 1.0;
       } else {
-        col[i * 3] = 0.22; col[i * 3 + 1] = 0.75; col[i * 3 + 2] = 1.0;
+        // Light Cyan (#5CEFFF)
+        col[i * 3] = 0.36; col[i * 3 + 1] = 0.94; col[i * 3 + 2] = 1.0;
       }
     }
 
@@ -225,7 +228,7 @@ export function HomeUniverseCore({
 
       {/* 2. Floating Peripheral Crystal Fragments (Clean, non-intrusive) */}
       <FloatingAsteroids
-        count={qualityTier === 'LOW' ? 4 : qualityTier === 'MEDIUM' ? 8 : 10}
+        count={qualityTier === 'LOW' ? 3 : qualityTier === 'MEDIUM' ? 6 : 8}
         isMobile={isMobile}
         prefersReducedMotion={prefersReducedMotion}
       />
@@ -236,21 +239,21 @@ export function HomeUniverseCore({
         <mesh>
           <sphereGeometry args={[1.84, 36, 36]} />
           <meshStandardMaterial
-            color="#051c38"
-            roughness={0.3}
-            metalness={0.6}
+            color="#020914"
+            roughness={0.25}
+            metalness={0.7}
             transparent
-            opacity={0.85}
-            emissive="#0284c7"
-            emissiveIntensity={0.5}
+            opacity={0.88}
+            emissive="#00d9ff"
+            emissiveIntensity={0.65}
           />
         </mesh>
 
-        {/* B. Inner Luminous Core (Electric Blue Glow) */}
+        {/* B. Inner Luminous Core (Electric Blue Glow #00D9FF) */}
         <mesh ref={coreRef}>
           <sphereGeometry args={[1.48, 32, 32]} />
           <meshBasicMaterial
-            color="#00f5ff"
+            color="#00d9ff"
             transparent
             opacity={0.85}
             blending={THREE.AdditiveBlending}
@@ -280,47 +283,47 @@ export function HomeUniverseCore({
           />
         </points>
 
-        {/* D. Delicate Holographic Longitude & Latitude Wireframe Grid */}
+        {/* D. Delicate Holographic Longitude & Latitude Wireframe Grid (#19E6FF) */}
         <mesh>
           <sphereGeometry args={[1.94, 28, 28]} />
           <meshBasicMaterial
-            color="#00f5ff"
+            color="#19e6ff"
             wireframe
             transparent
-            opacity={0.45}
+            opacity={0.55}
             blending={THREE.AdditiveBlending}
           />
         </mesh>
 
-        {/* E. Atmospheric Volumetric Glow Shield (Fresnel Effect) */}
+        {/* E. Atmospheric Volumetric Glow Shield (Fresnel Effect #00D9FF / #5CEFFF) */}
         <mesh ref={atmosphereRef}>
           <sphereGeometry args={[2.15, 32, 32]} />
           <meshBasicMaterial
-            color="#38bdf8"
+            color="#00d9ff"
             transparent
-            opacity={0.35}
+            opacity={0.4}
             side={THREE.DoubleSide}
             blending={THREE.AdditiveBlending}
           />
         </mesh>
 
-        {/* F. Slender 3-Orbit System around the Globe */}
+        {/* F. Slender 3-Orbit System around the Globe (#00D9FF / #5CEFFF) */}
         <group ref={ringsGroupRef}>
           {/* Orbit Ring 1 - Slender Primary Cyan Orbit */}
           <group rotation={[Math.PI / 6, 0, 0]}>
             <mesh>
               <torusGeometry args={[2.35, 0.008, 16, 128]} />
               <meshBasicMaterial
-                color="#38bdf8"
+                color="#00d9ff"
                 transparent
-                opacity={0.7}
+                opacity={0.8}
                 blending={THREE.AdditiveBlending}
               />
             </mesh>
             {/* Satellite 1 */}
             <mesh position={[2.35, 0, 0]}>
               <sphereGeometry args={[0.045, 12, 12]} />
-              <meshBasicMaterial color="#00f5ff" blending={THREE.AdditiveBlending} />
+              <meshBasicMaterial color="#f5fcff" blending={THREE.AdditiveBlending} />
             </mesh>
           </group>
 
@@ -329,16 +332,16 @@ export function HomeUniverseCore({
             <mesh>
               <torusGeometry args={[2.75, 0.007, 16, 128]} />
               <meshBasicMaterial
-                color="#06b6d4"
+                color="#19e6ff"
                 transparent
-                opacity={0.55}
+                opacity={0.65}
                 blending={THREE.AdditiveBlending}
               />
             </mesh>
             {/* Satellite 2 */}
             <mesh position={[-2.75, 0, 0]}>
               <sphereGeometry args={[0.04, 12, 12]} />
-              <meshBasicMaterial color="#38bdf8" blending={THREE.AdditiveBlending} />
+              <meshBasicMaterial color="#5cefff" blending={THREE.AdditiveBlending} />
             </mesh>
           </group>
 
@@ -347,9 +350,9 @@ export function HomeUniverseCore({
             <mesh>
               <torusGeometry args={[3.15, 0.006, 16, 128]} />
               <meshBasicMaterial
-                color="#0ea5e9"
+                color="#168bff"
                 transparent
-                opacity={0.4}
+                opacity={0.45}
                 blending={THREE.AdditiveBlending}
               />
             </mesh>
@@ -407,9 +410,9 @@ function OrbitalConnectionLine({
   return (
     <line geometry={lineGeom}>
       <lineBasicMaterial
-        color={isHovered ? '#00f5ff' : '#06b6d4'}
+        color={isHovered ? '#f5fcff' : '#00d9ff'}
         transparent
-        opacity={isHovered ? 0.75 : 0.3}
+        opacity={isHovered ? 0.85 : 0.4}
         blending={THREE.AdditiveBlending}
       />
     </line>
@@ -446,7 +449,7 @@ function ConceptOrbitalNode({
   });
 
   const renderIcon = () => {
-    const iconProps = { className: 'w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-300' };
+    const iconProps = { className: 'w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#5cefff]' };
     switch (node.icon) {
       case 'code':
         return <Code2 {...iconProps} />;
@@ -467,7 +470,7 @@ function ConceptOrbitalNode({
       <mesh>
         <sphereGeometry args={[isMobile ? 0.035 : 0.05, 16, 16]} />
         <meshBasicMaterial
-          color={isHovered ? '#ffffff' : '#00f5ff'}
+          color={isHovered ? '#ffffff' : '#00d9ff'}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
@@ -479,8 +482,8 @@ function ConceptOrbitalNode({
           onMouseLeave={() => onHover(false)}
           className={`flex items-center gap-1.5 p-1 rounded-full border transition-all duration-300 cursor-pointer pointer-events-auto select-none backdrop-blur-md ${
             isHovered
-              ? 'border-cyan-300 bg-[#031528]/95 shadow-[0_0_24px_rgba(0,245,255,0.8)] ring-1 ring-cyan-400'
-              : 'border-cyan-500/60 bg-[#020d1c]/90 shadow-[0_0_14px_rgba(6,182,212,0.35)] hover:border-cyan-400'
+              ? 'border-[#5cefff] bg-[#031528]/95 shadow-[0_0_28px_rgba(0,217,255,0.95),inset_0_0_16px_rgba(92,239,255,0.45)] ring-1 ring-[#00d9ff]'
+              : 'border-[#00d9ff]/75 bg-[#020d1c]/90 shadow-[0_0_18px_rgba(0,217,255,0.55),inset_0_0_10px_rgba(0,217,255,0.2)] hover:border-[#19e6ff]'
           }`}
           style={{
             transform: `scale(${isHovered ? 1.06 : 1.0})`,
@@ -489,12 +492,12 @@ function ConceptOrbitalNode({
         >
           {node.layout === 'label-first' ? (
             <>
-              <span className="font-orbitron text-[10px] sm:text-xs font-bold tracking-wider text-cyan-300 pl-2.5 pr-1 whitespace-nowrap">
+              <span className="font-orbitron text-[10px] sm:text-xs font-bold tracking-wider text-[#00d9ff] drop-shadow-[0_0_8px_rgba(0,217,255,0.6)] pl-2.5 pr-1 whitespace-nowrap">
                 {node.name}
               </span>
               <div
-                className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-cyan-400/80 bg-cyan-950/70 flex items-center justify-center transition-all ${
-                  isHovered ? 'shadow-[0_0_12px_rgba(0,245,255,0.8)] scale-105' : 'shadow-[0_0_8px_rgba(0,245,255,0.4)]'
+                className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#00d9ff]/80 bg-[#02182c]/85 flex items-center justify-center transition-all ${
+                  isHovered ? 'shadow-[0_0_14px_rgba(0,217,255,0.9)] scale-105' : 'shadow-[0_0_10px_rgba(0,217,255,0.5)]'
                 }`}
               >
                 {renderIcon()}
@@ -503,13 +506,13 @@ function ConceptOrbitalNode({
           ) : (
             <>
               <div
-                className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-cyan-400/80 bg-cyan-950/70 flex items-center justify-center transition-all ${
-                  isHovered ? 'shadow-[0_0_12px_rgba(0,245,255,0.8)] scale-105' : 'shadow-[0_0_8px_rgba(0,245,255,0.4)]'
+                className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-[#00d9ff]/80 bg-[#02182c]/85 flex items-center justify-center transition-all ${
+                  isHovered ? 'shadow-[0_0_14px_rgba(0,217,255,0.9)] scale-105' : 'shadow-[0_0_10px_rgba(0,217,255,0.5)]'
                 }`}
               >
                 {renderIcon()}
               </div>
-              <span className="font-orbitron text-[10px] sm:text-xs font-bold tracking-wider text-cyan-300 pr-2.5 pl-1 whitespace-nowrap">
+              <span className="font-orbitron text-[10px] sm:text-xs font-bold tracking-wider text-[#00d9ff] drop-shadow-[0_0_8px_rgba(0,217,255,0.6)] pr-2.5 pl-1 whitespace-nowrap">
                 {node.name}
               </span>
             </>

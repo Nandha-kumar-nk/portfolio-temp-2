@@ -128,17 +128,26 @@ export function TransformingParticleField({
     const nkPos = generateNkPositions(particleCount);
 
     for (let i = 0; i < particleCount; i++) {
-      // 1. Home Globe & Orbital Swarm Pos (Targeted density around upper orbital system, clean typography zone)
-      const radius = 1.9 + (Math.random() - 0.5) * 1.5;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = (Math.random() - 0.5) * Math.PI;
-      let homeX = radius * Math.cos(theta) * Math.cos(phi);
-      let homeY = radius * Math.sin(phi) + 0.85;
-      let homeZ = radius * Math.sin(theta) * Math.cos(phi);
+      // 1. Home Distant Star Dust (Subtle peripheral background stars only, center & typography completely clean)
+      const isTinyBackdrop = i % 8 === 0; // Only ~12% of particles active in home backdrop
+      let homeX = 0;
+      let homeY = 0;
+      let homeZ = 0;
 
-      // Deflect particles away from the central typography text area (y < 0.2 and |x| < 3.2)
-      if (homeY < 0.2 && Math.abs(homeX) < 3.2) {
-        homeY += 1.6;
+      if (isTinyBackdrop) {
+        const radius = 5.2 + (Math.random() * 4.5);
+        const theta = Math.random() * Math.PI * 2;
+        const phi = (Math.random() - 0.5) * Math.PI * 0.9;
+        homeX = radius * Math.cos(theta) * Math.cos(phi);
+        homeY = radius * Math.sin(phi) + 0.4;
+        homeZ = -1.5 - Math.random() * 3.5; // Distant depth
+      } else {
+        // Dormant offscreen / distant stars for Home, ready to assemble when scrolling to About
+        const radius = 8.5 + (Math.random() * 4.0);
+        const theta = Math.random() * Math.PI * 2;
+        homeX = radius * Math.cos(theta);
+        homeY = (Math.random() - 0.5) * 8.0;
+        homeZ = -4.0 - Math.random() * 4.0;
       }
 
       // 2. About Flowing Ribbon Pos
@@ -165,25 +174,25 @@ export function TransformingParticleField({
       // 5. Contact NK Pos
       const nk = nkPos[i] || [0, 0, 0];
 
-      // Colors
+      // Colors - Pure Electric Cyan, Sky Blue & White Palette (No purple/violet)
       const colorPick = Math.random();
       let colorType = 0;
-      if (colorPick > 0.85) {
+      if (colorPick > 0.75) {
         // Pure White Core
         colorType = 3;
-        col[i * 3] = 1.0; col[i * 3 + 1] = 1.0; col[i * 3 + 2] = 1.0;
-      } else if (colorPick > 0.45) {
-        // Electric Cyan
+        col[i * 3] = 0.96; col[i * 3 + 1] = 0.99; col[i * 3 + 2] = 1.0;
+      } else if (colorPick > 0.4) {
+        // Bright Electric Cyan (#00D9FF)
         colorType = 0;
-        col[i * 3] = 0.05; col[i * 3 + 1] = 0.88; col[i * 3 + 2] = 1.0;
-      } else if (colorPick > 0.2) {
-        // Vibrant Sky Blue
+        col[i * 3] = 0.0; col[i * 3 + 1] = 0.85; col[i * 3 + 2] = 1.0;
+      } else if (colorPick > 0.15) {
+        // Light Cyan (#5CEFFF)
         colorType = 1;
-        col[i * 3] = 0.22; col[i * 3 + 1] = 0.65; col[i * 3 + 2] = 1.0;
+        col[i * 3] = 0.36; col[i * 3 + 1] = 0.94; col[i * 3 + 2] = 1.0;
       } else {
-        // Violet/Indigo Accent
+        // Cool Electric Blue (#168BFF)
         colorType = 2;
-        col[i * 3] = 0.65; col[i * 3 + 1] = 0.35; col[i * 3 + 2] = 1.0;
+        col[i * 3] = 0.09; col[i * 3 + 1] = 0.55; col[i * 3 + 2] = 1.0;
       }
 
       // Explosion Direction

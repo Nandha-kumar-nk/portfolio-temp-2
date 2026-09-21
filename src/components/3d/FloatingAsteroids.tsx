@@ -35,16 +35,16 @@ export function FloatingAsteroids({
     // Subtle peripheral crystal fragments to keep hero center clean
     const fixedAnchors: Array<{ radius: number; theta: number; y: number; scale: number; polyType: 0 | 1 | 2; color: string }> = [
       // Left side subtle fragments
-      { radius: 6.2, theta: Math.PI * 0.85, y: 2.2, scale: 0.12, polyType: 1, color: '#38bdf8' },
-      { radius: 5.8, theta: Math.PI * 0.98, y: 0.4, scale: 0.14, polyType: 0, color: '#06b6d4' },
-      { radius: 6.5, theta: Math.PI * 1.15, y: -2.0, scale: 0.16, polyType: 2, color: '#0284c7' },
-      { radius: 5.0, theta: Math.PI * 0.75, y: 2.6, scale: 0.09, polyType: 1, color: '#818cf8' },
+      { radius: 6.2, theta: Math.PI * 0.85, y: 2.2, scale: 0.11, polyType: 1, color: '#00d9ff' },
+      { radius: 5.8, theta: Math.PI * 0.98, y: 0.4, scale: 0.12, polyType: 0, color: '#19e6ff' },
+      { radius: 6.5, theta: Math.PI * 1.15, y: -2.0, scale: 0.14, polyType: 2, color: '#168bff' },
+      { radius: 5.0, theta: Math.PI * 0.75, y: 2.6, scale: 0.08, polyType: 1, color: '#5cefff' },
 
       // Right side subtle fragments
-      { radius: 6.4, theta: Math.PI * 0.15, y: 2.0, scale: 0.14, polyType: 0, color: '#38bdf8' },
-      { radius: 5.6, theta: Math.PI * 0.05, y: -0.6, scale: 0.12, polyType: 2, color: '#06b6d4' },
-      { radius: 6.8, theta: Math.PI * 1.85, y: -2.2, scale: 0.18, polyType: 1, color: '#0ea5e9' },
-      { radius: 5.2, theta: Math.PI * 0.25, y: 2.8, scale: 0.10, polyType: 0, color: '#00f5ff' },
+      { radius: 6.4, theta: Math.PI * 0.15, y: 2.0, scale: 0.12, polyType: 0, color: '#00d9ff' },
+      { radius: 5.6, theta: Math.PI * 0.05, y: -0.6, scale: 0.11, polyType: 2, color: '#19e6ff' },
+      { radius: 6.8, theta: Math.PI * 1.85, y: -2.2, scale: 0.15, polyType: 1, color: '#168bff' },
+      { radius: 5.2, theta: Math.PI * 0.25, y: 2.8, scale: 0.09, polyType: 0, color: '#5cefff' },
     ];
 
     for (let i = 0; i < effectiveCount; i++) {
@@ -72,7 +72,7 @@ export function FloatingAsteroids({
           rotationSpeed: [(Math.random() - 0.5) * 0.5, (Math.random() - 0.5) * 0.6, (Math.random() - 0.5) * 0.4],
           scale: (0.06 + Math.random() * 0.08) * (isMobile ? 0.65 : 0.9),
           polyType: (i % 3) as 0 | 1 | 2,
-          color: i % 4 === 0 ? '#38bdf8' : i % 4 === 1 ? '#06b6d4' : i % 4 === 2 ? '#818cf8' : '#00f5ff',
+          color: i % 4 === 0 ? '#00d9ff' : i % 4 === 1 ? '#19e6ff' : i % 4 === 2 ? '#5cefff' : '#168bff',
         });
       }
     }
