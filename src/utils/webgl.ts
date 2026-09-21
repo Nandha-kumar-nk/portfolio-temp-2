@@ -1,20 +1,26 @@
-// Cached WebGL availability status
 let cachedWebGLStatus: boolean | null = null;
 
 export function isWebGLAvailable(): boolean {
-  if (typeof window === 'undefined') return false;
-  if (cachedWebGLStatus !== null) return cachedWebGLStatus;
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  if (cachedWebGLStatus !== null) {
+    return cachedWebGLStatus;
+  }
 
   try {
     const canvas = document.createElement('canvas');
+
     const gl =
       canvas.getContext('webgl2') ||
-      canvas.getContext('webgl') ||
-      canvas.getContext('experimental-webgl');
+      canvas.getContext('webgl');
 
-    cachedWebGLStatus = !!gl;
+    cachedWebGLStatus = gl !== null;
+
     return cachedWebGLStatus;
-  } catch {
+  } catch (error) {
+    console.error('[WebGL] Detection failed:', error);
     cachedWebGLStatus = false;
     return false;
   }

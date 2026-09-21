@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import * as THREE from 'three';
 import { SceneNumber } from '../types';
@@ -10,7 +10,6 @@ import { CyberGlobe } from './CyberGlobe';
 import { HomeUniverseCore } from './3d/HomeUniverseCore';
 import { TransformingParticleField } from './3d/TransformingParticleField';
 import { Scene06Atmosphere } from './Scene06Atmosphere';
-import { isWebGLAvailable } from '../utils/webgl';
 import { WebGLErrorBoundary, WebGLCosmicFallback } from './WebGLErrorBoundary';
 
 interface ExperienceCanvasProps {
@@ -32,24 +31,9 @@ export function ExperienceCanvas({
   isDestroyed = false,
   destructionProgress = 0,
 }: ExperienceCanvasProps) {
-  console.log('[ExperienceCanvas] scene:', currentScene);
-  const [webglSupported, setWebglSupported] = useState<boolean>(() => isWebGLAvailable());
-
   useEffect(() => {
-    setWebglSupported(isWebGLAvailable());
-  }, []);
-
-  if (!webglSupported) {
-    console.warn('[ExperienceCanvas] WebGL not supported, rendering fallback');
-    return (
-      <div
-        className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none"
-        style={{ zIndex: 0 }}
-      >
-        <WebGLCosmicFallback />
-      </div>
-    );
-  }
+    console.log('[ExperienceCanvas] Scene:', currentScene);
+  }, [currentScene]);
 
   return (
     <div
@@ -60,8 +44,11 @@ export function ExperienceCanvas({
         <Canvas
           camera={{ position: [0, 0, 7], fov: 48, near: 0.1, far: 1000 }}
           dpr={quality.dpr}
-          onCreated={({ gl }) => {
-            console.log('[R3F] WebGL renderer created', gl);
+          onCreated={({ gl, camera, scene }) => {
+            console.log('[R3F] WebGL renderer created');
+            console.log('[R3F] Canvas:', gl.domElement);
+            console.log('[R3F] Camera:', camera);
+            console.log('[R3F] Scene:', scene);
             const handleContextLost = (e: Event) => {
               e.preventDefault();
               console.warn('[ExperienceCanvas] WebGL context lost.');

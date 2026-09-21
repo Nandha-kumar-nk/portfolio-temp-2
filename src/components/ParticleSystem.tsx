@@ -136,10 +136,22 @@ export function ParticleSystem({
         targetY = gy * pulse;
         targetZ = gz * pulse;
       } else if (scene === 5) {
-        // Energy Beam & Shockwave Burst
-        targetX = p.beam[0];
-        targetY = p.beam[1];
-        targetZ = p.beam[2];
+        // High-energy globe state: 70% particles maintain glowing globe, 30% surge into beam
+        if (i % 3 === 0) {
+          targetX = p.beam[0];
+          targetY = p.beam[1];
+          targetZ = p.beam[2];
+        } else {
+          const rotAngle = time * (prefersReducedMotion ? 0.2 : 0.45);
+          const cosR = Math.cos(rotAngle);
+          const sinR = Math.sin(rotAngle);
+          const gx = p.globe[0] * cosR - p.globe[2] * sinR;
+          const gz = p.globe[0] * sinR + p.globe[2] * cosR;
+          const gy = p.globe[1];
+          targetX = gx * 1.02;
+          targetY = gy * 1.02;
+          targetZ = gz * 1.02;
+        }
       } else {
         // Scene 6 & 7: Wide framing celestial globe and background aura
         const rotAngle = time * (prefersReducedMotion ? 0.1 : 0.25);
