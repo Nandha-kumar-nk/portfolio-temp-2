@@ -95,44 +95,44 @@ export function HomeScene({
       {/* 3. FOREGROUND HTML OVERLAY (Strict Visual Hierarchy)                   */}
       {/* Layered above background Canvas with pointer-events-none              */}
       {/* ===================================================================== */}
-      <div className="relative z-10 w-full min-h-[100svh] flex flex-col justify-between pt-[max(4.25rem,env(safe-area-inset-top))] sm:pt-20 lg:pt-24 pb-[max(1.25rem,env(safe-area-inset-bottom))] px-4 sm:px-8 lg:px-14 box-border pointer-events-none">
+      <div className="relative z-10 w-full min-h-[100svh] flex flex-col justify-between pt-16 sm:pt-20 lg:pt-24 pb-6 sm:pb-8 px-4 sm:px-8 lg:px-14 box-border pointer-events-none">
 
         {/* ------------------------------------------------------------------- */}
-        {/* A. TITLE SECTION (Positioned at Top of Home, Above 3D Globe)        */}
+        {/* A. UPPER ORBITAL SYSTEM SPACE RESERVED FOR 3D GLOBE + 6 NODES      */}
         {/* ------------------------------------------------------------------- */}
-        <div className="flex flex-col items-center text-center w-full pointer-events-auto transition-all duration-700 ease-out z-20">
-          <h1 className="font-orbitron font-bold text-[clamp(1.75rem,9.2vw,2.75rem)] sm:text-5xl md:text-6xl lg:text-[3.6rem] leading-none tracking-[0.10em] sm:tracking-[0.26em] text-slate-100 drop-shadow-[0_0_30px_rgba(6,182,212,0.45)] whitespace-nowrap">
+        <div className="w-full h-[38svh] xs:h-[40svh] sm:h-[45svh] md:h-[48svh] pointer-events-none flex-shrink-0" />
+
+        {/* ------------------------------------------------------------------- */}
+        {/* B. TITLE SECTION (Positioned Below Orbital Globe Composition)       */}
+        {/* ------------------------------------------------------------------- */}
+        <div className="flex flex-col items-center text-center w-full pointer-events-auto transition-all duration-700 ease-out mt-1 sm:mt-2">
+          <h1 className="font-orbitron font-bold text-3xl sm:text-5xl md:text-6xl lg:text-[3.6rem] leading-none tracking-[0.20em] sm:tracking-[0.26em] text-slate-100 drop-shadow-[0_0_30px_rgba(6,182,212,0.45)] whitespace-nowrap">
             NANDHAKUMAR
           </h1>
-          <h2 className="font-orbitron font-semibold text-[clamp(1.2rem,7.2vw,2rem)] sm:text-3xl md:text-4xl lg:text-[2.2rem] leading-tight tracking-[0.18em] sm:tracking-[0.38em] text-cyan-400 mt-1 sm:mt-1.5 mb-1.5 sm:mb-2 drop-shadow-[0_0_25px_rgba(6,182,212,0.65)] whitespace-nowrap">
+          <h2 className="font-orbitron font-semibold text-xl sm:text-3xl md:text-4xl lg:text-[2.2rem] leading-tight tracking-[0.30em] sm:tracking-[0.38em] text-cyan-400 mt-1 sm:mt-1.5 mb-1.5 sm:mb-2 drop-shadow-[0_0_25px_rgba(6,182,212,0.65)] whitespace-nowrap">
             UNIVERSE
           </h2>
-          <p className="font-mono-code text-[9px] sm:text-xs md:text-sm tracking-[0.18em] sm:tracking-[0.36em] text-cyan-300/90 font-medium uppercase drop-shadow-[0_0_12px_rgba(6,182,212,0.3)] whitespace-nowrap">
+          <p className="font-mono-code text-[10px] sm:text-xs md:text-sm tracking-[0.26em] sm:tracking-[0.36em] text-cyan-300/90 font-medium uppercase drop-shadow-[0_0_12px_rgba(6,182,212,0.3)]">
             IDEAS • CODE • CREATE • IMPACT
           </p>
         </div>
 
         {/* ------------------------------------------------------------------- */}
-        {/* B. DEDICATED VISUAL WINDOW FOR 3D GLOBE + ORBITAL RINGS             */}
-        {/* ------------------------------------------------------------------- */}
-        <div className="w-full flex-1 min-h-[16svh] sm:min-h-[38svh] pointer-events-none flex-shrink-0" />
-
-        {/* ------------------------------------------------------------------- */}
         {/* C. CENTER CTA BUTTON (EXPLORE MY WORK)                              */}
         {/* ------------------------------------------------------------------- */}
-        <div className="mt-1 sm:mt-4 mb-2 sm:mb-4 flex flex-col items-center justify-center pointer-events-auto z-20 w-full px-2">
+        <div className="mt-3 sm:mt-5 mb-3 sm:mb-5 flex flex-col items-center justify-center pointer-events-auto z-20 w-full px-4">
           <button
             id="explore-my-work-btn"
             type="button"
             onClick={handleCtaClick}
             disabled={isExploring}
-            className={`group relative min-h-[58px] sm:min-h-[50px] w-[80vw] max-w-[340px] sm:w-auto px-8 sm:px-12 py-3.5 sm:py-3 rounded-full border border-cyan-400/80 hover:border-cyan-300 bg-slate-950/90 hover:bg-cyan-950/60 backdrop-blur-md text-slate-100 hover:text-white font-orbitron font-semibold text-xs sm:text-sm tracking-[0.20em] sm:tracking-[0.24em] shadow-[0_0_25px_rgba(6,182,212,0.4),inset_0_0_15px_rgba(6,182,212,0.2)] hover:shadow-[0_0_42px_rgba(6,182,212,0.8),inset_0_0_20px_rgba(56,189,248,0.5)] hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 cursor-pointer flex items-center justify-center gap-3 overflow-hidden ${
+            className={`group relative min-h-[46px] sm:min-h-[50px] w-[88%] sm:w-auto px-8 sm:px-12 py-3 rounded-full border border-cyan-400/80 hover:border-cyan-300 bg-slate-950/85 hover:bg-cyan-950/60 backdrop-blur-md text-slate-100 hover:text-white font-orbitron font-semibold text-xs sm:text-sm tracking-[0.24em] shadow-[0_0_25px_rgba(6,182,212,0.4),inset_0_0_15px_rgba(6,182,212,0.2)] hover:shadow-[0_0_42px_rgba(6,182,212,0.8),inset_0_0_20px_rgba(56,189,248,0.5)] hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 cursor-pointer flex items-center justify-center gap-3 overflow-hidden ${
               isExploring ? 'ring-2 ring-cyan-400 shadow-[0_0_45px_rgba(6,182,212,0.9)]' : ''
             }`}
           >
             {/* Shimmer sweep animation */}
             <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-cyan-400/35 to-transparent pointer-events-none" />
-            <span className="relative z-10 text-cyan-50 group-hover:text-white tracking-[0.20em] sm:tracking-[0.24em]">
+            <span className="relative z-10 text-cyan-50 group-hover:text-white tracking-[0.24em]">
               {isExploring ? 'EXPLORING...' : 'EXPLORE MY WORK'}
             </span>
             <ArrowRight
@@ -146,23 +146,23 @@ export function HomeScene({
         {/* ------------------------------------------------------------------- */}
         {/* D. BOTTOM ROW: Supporting Identity Elements & Scroll Indicator      */}
         {/* ------------------------------------------------------------------- */}
-        <div className="w-full flex flex-col sm:flex-row items-center sm:items-end justify-between gap-3 sm:gap-4 pt-1 sm:pt-2 pointer-events-auto max-w-7xl mx-auto z-20">
+        <div className="w-full flex flex-col sm:flex-row items-center sm:items-end justify-between gap-4 pt-2 pointer-events-auto max-w-7xl mx-auto z-20">
           {/* Lower-Left Supporting Statement: DIGITAL ARCHITECTURE */}
           <div className="flex flex-col items-center sm:items-start text-center sm:text-left select-none">
-            <div className="flex items-center gap-2 mb-0.5 sm:mb-1 opacity-90">
+            <div className="flex items-center gap-2 mb-1 opacity-90">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_6px_#22d3ee]" />
-              <span className="text-[9px] sm:text-[11px] font-mono-code tracking-[0.22em] sm:tracking-[0.26em] text-cyan-400 font-semibold uppercase">
+              <span className="text-[10px] sm:text-[11px] font-mono-code tracking-[0.26em] text-cyan-400 font-semibold uppercase">
                 DIGITAL ARCHITECTURE
               </span>
             </div>
-            <h3 className="font-orbitron text-[11px] sm:text-sm font-bold text-slate-100 leading-snug tracking-wider">
+            <h3 className="font-orbitron text-xs sm:text-sm font-bold text-slate-100 leading-snug tracking-wider">
               Turning <span className="text-cyan-300">Ideas</span> into{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-200 to-blue-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.35)]">
                 Real Experiences
               </span>
             </h3>
-            <div className="w-16 sm:w-28 h-[1px] bg-gradient-to-r from-cyan-500/50 to-transparent my-0.5 sm:my-1" />
-            <p className="text-[8.5px] sm:text-[10px] font-mono-code tracking-[0.18em] sm:tracking-[0.22em] text-slate-400 uppercase">
+            <div className="w-20 sm:w-28 h-[1px] bg-gradient-to-r from-cyan-500/50 to-transparent my-1" />
+            <p className="text-[9px] sm:text-[10px] font-mono-code tracking-[0.22em] text-slate-400 uppercase">
               FULL STACK • CREATIVE TECH • REAL IMPACT
             </p>
           </div>
@@ -182,16 +182,16 @@ export function HomeScene({
               id="home-scroll-indicator-btn"
               type="button"
               onClick={handleScrollClick}
-              className="flex flex-col items-center sm:items-end gap-0.5 sm:gap-1 text-slate-400 hover:text-cyan-300 transition-colors cursor-pointer group p-1"
+              className="flex flex-col items-center sm:items-end gap-1 text-slate-400 hover:text-cyan-300 transition-colors cursor-pointer group p-1"
               aria-label="Scroll to Explore"
             >
-              <span className="text-[8.5px] sm:text-[10px] font-mono-code tracking-[0.20em] sm:tracking-[0.24em] uppercase text-slate-400 group-hover:text-cyan-400 transition-colors">
+              <span className="text-[9px] sm:text-[10px] font-mono-code tracking-[0.24em] uppercase text-slate-400 group-hover:text-cyan-400 transition-colors">
                 SCROLL TO EXPLORE
               </span>
-              <div className="w-3.5 h-5 sm:w-4 sm:h-7 rounded-full border border-slate-700/80 group-hover:border-cyan-400/80 p-0.5 flex justify-center transition-colors shadow-[0_0_10px_rgba(6,182,212,0.15)]">
-                <div className="w-1 h-1 sm:h-1.5 rounded-full bg-cyan-400 animate-bounce mt-0.5" />
+              <div className="w-4 h-6 sm:h-7 rounded-full border border-slate-700/80 group-hover:border-cyan-400/80 p-0.5 flex justify-center transition-colors shadow-[0_0_10px_rgba(6,182,212,0.15)]">
+                <div className="w-1 h-1.5 rounded-full bg-cyan-400 animate-bounce mt-0.5" />
               </div>
-              <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400/80 animate-bounce -mt-0.5" />
+              <ChevronDown className="w-3.5 h-3.5 text-cyan-400/80 animate-bounce -mt-0.5" />
             </button>
           </div>
         </div>

@@ -14,6 +14,7 @@ import { WebGLErrorBoundary, WebGLCosmicFallback } from './WebGLErrorBoundary';
 
 interface ExperienceCanvasProps {
   currentScene: SceneNumber;
+  activeSection?: string;
   transitionProgress: number;
   quality: DeviceQualityInfo;
   scrollSectionProgress?: number;
@@ -24,6 +25,7 @@ interface ExperienceCanvasProps {
 
 export function ExperienceCanvas({
   currentScene,
+  activeSection = 'home',
   transitionProgress,
   quality,
   scrollSectionProgress = 0,
@@ -120,8 +122,8 @@ export function ExperienceCanvas({
             />
           )}
 
-          {/* Home Scene Universe Core & Continuous Transforming 3D Particle Field (Scene 7) */}
-          {currentScene === 7 && (
+          {/* Home Scene Universe Core & Continuous Transforming 3D Particle Field (Scene 7, isolated to Home) */}
+          {currentScene === 7 && activeSection === 'home' && (
             <>
               <HomeUniverseCore
                 isMobile={quality.isMobile}

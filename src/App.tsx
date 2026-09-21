@@ -283,6 +283,7 @@ export default function App() {
         <WebGLErrorBoundary name="AppExperienceCanvas">
           <ExperienceCanvas
             currentScene={currentScene}
+            activeSection={activeSection}
             transitionProgress={transitionProgress}
             quality={quality}
             scrollSectionProgress={scrollState.scrollSectionProgress}
