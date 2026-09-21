@@ -162,12 +162,12 @@ export function HomeUniverseCore({
     }
   });
 
-  // Refined globe scale and position for centered, dominant framing:
-  // Desktop: large, centered, dominant hero presence occupying 55%+ of viewport height
-  // Mobile: scaled down intelligently to ensure zero overflow and full visibility
-  const globeScale = isMobile ? 0.82 : 1.15;
-  const globePosition: [number, number, number] = [0, isMobile ? -0.1 : -0.25, 0];
-  const platformY = isMobile ? -2.2 : -2.55;
+  // Proportional globe scale and position for balanced hero framing:
+  // Desktop: occupies ~35–45% viewport width, perfectly framing hero title & CTA
+  // Mobile: occupies ~55–65% viewport width without horizontal overflow
+  const globeScale = isMobile ? 0.58 : 0.76;
+  const globePosition: [number, number, number] = [0, isMobile ? 0.12 : 0.08, 0];
+  const platformY = isMobile ? -2.1 : -2.35;
 
   return (
     <group position={globePosition}>

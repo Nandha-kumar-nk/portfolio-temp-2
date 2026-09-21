@@ -133,11 +133,11 @@ export function CinematicCamera({ currentScene, prefersReducedMotion = false }: 
       case 7:
         // Scene 7: Interactive responsive framing for Home Universe Core and glowing pedestal
         targetPos.set(
-          mouseParallaxX * (isPortrait ? 0.3 : 0.4),
-          (isPortrait ? 0.2 : 0.0) + mouseParallaxY * (isPortrait ? 0.25 : 0.35),
-          (isPortrait ? 7.6 : 6.8) * zDistanceMod
+          mouseParallaxX * (isPortrait ? 0.25 : 0.35),
+          (isPortrait ? 0.1 : 0.0) + mouseParallaxY * (isPortrait ? 0.2 : 0.3),
+          (isPortrait ? 7.6 : 7.2) * zDistanceMod
         );
-        lookTargetY = isPortrait ? 0.15 : 0.0;
+        lookTargetY = isPortrait ? 0.1 : 0.0;
         break;
 
       case 8:
