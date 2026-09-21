@@ -98,22 +98,22 @@ export function TransformingParticleField({
 
   const { viewport } = useThree();
 
-  // Create particle texture
+  // Create crisp pin-point star particle texture
   const particleTexture = useMemo(() => {
     const canvas = document.createElement('canvas');
-    canvas.width = 64;
-    canvas.height = 64;
+    canvas.width = 32;
+    canvas.height = 32;
     const ctx = canvas.getContext('2d');
     if (!ctx) return null;
 
-    const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+    const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
     gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    gradient.addColorStop(0.25, 'rgba(56, 189, 248, 0.9)');
-    gradient.addColorStop(0.6, 'rgba(6, 182, 212, 0.35)');
+    gradient.addColorStop(0.2, 'rgba(0, 217, 255, 0.85)');
+    gradient.addColorStop(0.5, 'rgba(0, 217, 255, 0.2)');
     gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
     ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 64, 64);
+    ctx.fillRect(0, 0, 32, 32);
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.needsUpdate = true;
@@ -434,7 +434,9 @@ export function TransformingParticleField({
     }
   });
 
-  const pointSize = isMobile ? 0.09 : 0.13;
+  const pointSize = scrollSectionProgress < 0.5
+    ? (isMobile ? 0.035 : 0.048)
+    : (isMobile ? 0.09 : 0.13);
 
   return (
     <group>
@@ -449,7 +451,7 @@ export function TransformingParticleField({
           map={particleTexture || undefined}
           vertexColors
           transparent
-          opacity={scrollSectionProgress < 0.5 ? 0.62 : 0.88}
+          opacity={scrollSectionProgress < 0.5 ? 0.35 : 0.88}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
         />

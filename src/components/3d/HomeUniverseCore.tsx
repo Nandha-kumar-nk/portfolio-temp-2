@@ -136,11 +136,11 @@ export function HomeUniverseCore({
       id: 'build',
       name: 'BUILD',
       icon: 'box',
-      pos: [isMobile ? 0.15 : 0.28, isMobile ? 1.35 : 1.55, 0.25],
+      pos: [isMobile ? 0.10 : 0.20, isMobile ? 1.02 : 1.18, 0.25],
       layout: 'icon-first',
       orbitSpeed: 0.15,
       orbitPhase: 0.2,
-      connectionTarget: [0.2, 1.0, 0.1],
+      connectionTarget: [isMobile ? 0.08 : 0.15, isMobile ? 0.75 : 0.85, 0.1],
     },
     {
       id: 'develop',

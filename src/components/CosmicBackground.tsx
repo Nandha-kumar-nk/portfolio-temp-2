@@ -26,16 +26,16 @@ export function CosmicBackground({ count = 1200, prefersReducedMotion = false }:
       pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
       pos[i * 3 + 2] = r * Math.cos(phi);
 
-      // Celestial colors: deep blue, cyan, subtle purple, brilliant white
+      // Celestial colors: deep blue, cyan, brilliant white (No purple)
       const colorPick = Math.random();
-      if (colorPick > 0.8) {
-        col[i * 3] = 1.0; col[i * 3 + 1] = 1.0; col[i * 3 + 2] = 1.0; // White
-      } else if (colorPick > 0.5) {
-        col[i * 3] = 0.22; col[i * 3 + 1] = 0.74; col[i * 3 + 2] = 0.98; // Cyan
-      } else if (colorPick > 0.25) {
-        col[i * 3] = 0.15; col[i * 3 + 1] = 0.45; col[i * 3 + 2] = 0.95; // Blue
+      if (colorPick > 0.75) {
+        col[i * 3] = 0.96; col[i * 3 + 1] = 0.99; col[i * 3 + 2] = 1.0; // Pure White
+      } else if (colorPick > 0.45) {
+        col[i * 3] = 0.0; col[i * 3 + 1] = 0.85; col[i * 3 + 2] = 1.0; // Electric Cyan (#00D9FF)
+      } else if (colorPick > 0.2) {
+        col[i * 3] = 0.36; col[i * 3 + 1] = 0.94; col[i * 3 + 2] = 1.0; // Light Cyan (#5CEFFF)
       } else {
-        col[i * 3] = 0.55; col[i * 3 + 1] = 0.35; col[i * 3 + 2] = 0.95; // Violet
+        col[i * 3] = 0.09; col[i * 3 + 1] = 0.55; col[i * 3 + 2] = 1.0; // Electric Blue (#168BFF)
       }
     }
 
@@ -45,8 +45,8 @@ export function CosmicBackground({ count = 1200, prefersReducedMotion = false }:
   useFrame((_, delta) => {
     if (pointsRef.current) {
       const speedMultiplier = prefersReducedMotion ? 0.3 : 1.0;
-      pointsRef.current.rotation.y += delta * 0.012 * speedMultiplier;
-      pointsRef.current.rotation.x += delta * 0.004 * speedMultiplier;
+      pointsRef.current.rotation.y += delta * 0.008 * speedMultiplier;
+      pointsRef.current.rotation.x += delta * 0.003 * speedMultiplier;
     }
   });
 
@@ -63,10 +63,10 @@ export function CosmicBackground({ count = 1200, prefersReducedMotion = false }:
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.12}
+        size={0.045}
         vertexColors
         transparent
-        opacity={0.75}
+        opacity={0.45}
         sizeAttenuation
         blending={THREE.AdditiveBlending}
       />
