@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { DeviceQualityInfo } from '../hooks/useDeviceQuality';
-import { HomeGlobeCanvas } from './3d/HomeGlobeCanvas';
 import { soundEngine } from '../utils/audio';
 
 interface HomeSceneProps {
@@ -91,18 +90,6 @@ export function HomeScene({
         className="absolute bottom-0 inset-x-0 h-40 sm:h-56 bg-gradient-to-t from-cyan-950/20 via-[#020208]/30 to-transparent pointer-events-none z-0"
         aria-hidden="true"
       />
-
-      {/* ===================================================================== */}
-      {/* 2. 3D HOME GLOBE CENTERPIECE CANVAS                                   */}
-      {/* Layered at z-5 (between background z-0 and HTML overlay z-10)          */}
-      {/* ===================================================================== */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none z-[5]">
-        <HomeGlobeCanvas
-          isMobile={_quality?.isMobile}
-          prefersReducedMotion={_quality?.prefersReducedMotion}
-          isExploring={isExploring}
-        />
-      </div>
 
       {/* ===================================================================== */}
       {/* 3. FOREGROUND HTML OVERLAY (Strict Visual Hierarchy)                   */}

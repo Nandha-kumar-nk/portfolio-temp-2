@@ -261,29 +261,7 @@ export default function App() {
       )}
 
       {/* ===================================================================== */}
-      {/* 2. FIXED 3D COSMIC STARFIELD BACKGROUND CANVAS (Cinematic Intro)       */}
-      {/* Background canvas layer: z-0 during intro                             */}
-      {/* ===================================================================== */}
-      {isIntroActive && (
-        <div
-          className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden"
-          style={{ background: 'transparent' }}
-        >
-          <WebGLErrorBoundary name="AppExperienceCanvas">
-            <ExperienceCanvas
-              currentScene={currentScene}
-              transitionProgress={transitionProgress}
-              quality={quality}
-              scrollSectionProgress={scrollState.scrollSectionProgress}
-              mousePos={scrollState.mousePos}
-            />
-          </WebGLErrorBoundary>
-        </div>
-      )}
-
-      {/* ===================================================================== */}
-      {/* 2.5 GLOBAL GALAXY PARTICLE BACKGROUND (z-0, pointer-events-none)      */}
-      {/* Rendered continuously behind all content when intro is complete       */}
+      {/* 2. GLOBAL GALAXY PARTICLE BACKGROUND (z-0, bottom layer)               */}
       {/* ===================================================================== */}
       {!isIntroActive && (
         <GalaxyBackground
@@ -293,6 +271,25 @@ export default function App() {
           mousePos={scrollState.mousePos}
         />
       )}
+
+      {/* ===================================================================== */}
+      {/* 2.5 3D THREE.JS UNIVERSE CANVAS (Cinematic Intro & Home Universe Core) */}
+      {/* Background 3D canvas layer: z-[1], pointer-events-none                 */}
+      {/* ===================================================================== */}
+      <div
+        className="fixed inset-0 w-full h-full pointer-events-none z-[1] overflow-hidden"
+        style={{ background: 'transparent' }}
+      >
+        <WebGLErrorBoundary name="AppExperienceCanvas">
+          <ExperienceCanvas
+            currentScene={currentScene}
+            transitionProgress={transitionProgress}
+            quality={quality}
+            scrollSectionProgress={scrollState.scrollSectionProgress}
+            mousePos={scrollState.mousePos}
+          />
+        </WebGLErrorBoundary>
+      </div>
 
       {/* ===================================================================== */}
       {/* 3. UNIFIED GLOBAL NAVIGATION NAVBAR (z-[100])                         */}
