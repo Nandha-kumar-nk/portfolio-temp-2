@@ -1,5 +1,7 @@
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo, useEffect, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { Html } from '@react-three/drei';
+import { Code2, Box, Lightbulb, Cog, Target } from 'lucide-react';
 import * as THREE from 'three';
 import { GlowingPlatform } from './GlowingPlatform';
 import { FloatingAsteroids } from './FloatingAsteroids';
@@ -10,21 +12,26 @@ interface HomeUniverseCoreProps {
   qualityTier?: 'HIGH' | 'MEDIUM' | 'LOW';
 }
 
+interface ConceptNodeData {
+  id: string;
+  name: string;
+  icon: 'code' | 'box' | 'lightbulb' | 'cog' | 'target';
+  pos: [number, number, number];
+  layout: 'icon-first' | 'label-first';
+  orbitSpeed: number;
+  orbitPhase: number;
+}
+
 export function HomeUniverseCore({
   isMobile = false,
   prefersReducedMotion = false,
   qualityTier = 'HIGH',
 }: HomeUniverseCoreProps) {
-  useEffect(() => {
-    console.log('[DIAGNOSTIC] 4. HomeUniverseCore mounted successfully!');
-  }, []);
-
   const globeGroupRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const atmosphereRef = useRef<THREE.Mesh>(null);
   const ringsGroupRef = useRef<THREE.Group>(null);
   const pointerPosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const frameCountRef = useRef(0);
 
   // Track pointer for subtle interactive globe tilt
   useEffect(() => {
@@ -39,7 +46,7 @@ export function HomeUniverseCore({
     return () => window.removeEventListener('pointermove', onPointerMove);
   }, []);
 
-  // Soft circular glowing particle texture (replaces square GPU raster points with smooth glowing circular motes)
+  // Soft circular glowing particle texture
   const particleTexture = useMemo(() => {
     const canvas = document.createElement('canvas');
     canvas.width = 64;
@@ -61,23 +68,22 @@ export function HomeUniverseCore({
     return texture;
   }, []);
 
-  // Elegant, high-visibility continental coordinate nodes
+  // Continental coordinate nodes
   const { continentPositions, continentColors } = useMemo(() => {
-    const pointCount = qualityTier === 'LOW' ? 260 : qualityTier === 'MEDIUM' ? 420 : 600;
+    const pointCount = qualityTier === 'LOW' ? 240 : qualityTier === 'MEDIUM' ? 380 : 520;
     const pos = new Float32Array(pointCount * 3);
     const col = new Float32Array(pointCount * 3);
 
     const continentalCenters = [
-      { lat: 40, lon: -100, spread: 32 }, // North America
-      { lat: -15, lon: -60, spread: 28 },  // South America
-      { lat: 50, lon: 15, spread: 24 },   // Europe
-      { lat: 5, lon: 25, spread: 32 },    // Africa
-      { lat: 45, lon: 85, spread: 40 },   // Asia
-      { lat: -25, lon: 135, spread: 20 }, // Australia
-      { lat: 25, lon: 55, spread: 18 },   // Middle East
+      { lat: 40, lon: -100, spread: 30 },
+      { lat: -15, lon: -60, spread: 26 },
+      { lat: 50, lon: 15, spread: 22 },
+      { lat: 5, lon: 25, spread: 30 },
+      { lat: 45, lon: 85, spread: 38 },
+      { lat: -25, lon: 135, spread: 18 },
+      { lat: 25, lon: 55, spread: 16 },
     ];
 
-    // Radius 1.88 sits slightly outside the 1.84 oceanic sphere for zero depth-clipping
     const globeR = 1.88;
 
     for (let i = 0; i < pointCount; i++) {
@@ -86,12 +92,10 @@ export function HomeUniverseCore({
 
       if (Math.random() < 0.85) {
         const center = continentalCenters[i % continentalCenters.length];
-        const rSpread = (Math.random() - 0.5) * center.spread * 1.5;
-        const latSpread = (Math.random() - 0.5) * center.spread * 1.1;
-        lat = center.lat + latSpread;
-        lon = center.lon + rSpread;
+        lat = center.lat + (Math.random() - 0.5) * center.spread * 1.1;
+        lon = center.lon + (Math.random() - 0.5) * center.spread * 1.4;
       } else {
-        lat = (Math.random() - 0.5) * 150;
+        lat = (Math.random() - 0.5) * 140;
         lon = (Math.random() - 0.5) * 360;
       }
 
@@ -105,68 +109,100 @@ export function HomeUniverseCore({
 
       const pick = Math.random();
       if (pick > 0.75) {
-        // Pure White node
         col[i * 3] = 1.0; col[i * 3 + 1] = 1.0; col[i * 3 + 2] = 1.0;
       } else if (pick > 0.35) {
-        // Electric Cyan glow
         col[i * 3] = 0.0; col[i * 3 + 1] = 0.96; col[i * 3 + 2] = 1.0;
-      } else if (pick > 0.12) {
-        // Sky Blue
-        col[i * 3] = 0.22; col[i * 3 + 1] = 0.75; col[i * 3 + 2] = 1.0;
       } else {
-        // Violet Accent
-        col[i * 3] = 0.65; col[i * 3 + 1] = 0.45; col[i * 3 + 2] = 1.0;
+        col[i * 3] = 0.22; col[i * 3 + 1] = 0.75; col[i * 3 + 2] = 1.0;
       }
     }
 
     return { continentPositions: pos, continentColors: col };
   }, [qualityTier]);
 
+  // 5 Concept Nodes configuration matching the reference image layout:
+  // BUILD (Top), DEVELOP (Mid-Left), INNOVATE (Mid-Right), IDEAS (Bottom-Left), IMPACT (Bottom-Right)
+  const conceptNodes: ConceptNodeData[] = useMemo(() => [
+    {
+      id: 'build',
+      name: 'BUILD',
+      icon: 'box',
+      pos: [isMobile ? 0.7 : 0.95, isMobile ? 1.85 : 2.15, 0.3],
+      layout: 'icon-first',
+      orbitSpeed: 0.15,
+      orbitPhase: 0.2,
+    },
+    {
+      id: 'develop',
+      name: 'DEVELOP',
+      icon: 'code',
+      pos: [isMobile ? -1.85 : -2.35, isMobile ? 0.95 : 1.15, 0.4],
+      layout: 'label-first',
+      orbitSpeed: 0.18,
+      orbitPhase: 1.4,
+    },
+    {
+      id: 'innovate',
+      name: 'INNOVATE',
+      icon: 'lightbulb',
+      pos: [isMobile ? 1.85 : 2.35, isMobile ? 0.45 : 0.55, 0.5],
+      layout: 'icon-first',
+      orbitSpeed: 0.16,
+      orbitPhase: 2.8,
+    },
+    {
+      id: 'ideas',
+      name: 'IDEAS',
+      icon: 'cog',
+      pos: [isMobile ? -1.65 : -2.05, isMobile ? -0.85 : -0.95, 0.4],
+      layout: 'label-first',
+      orbitSpeed: 0.2,
+      orbitPhase: 4.1,
+    },
+    {
+      id: 'impact',
+      name: 'IMPACT',
+      icon: 'target',
+      pos: [isMobile ? 1.55 : 1.85, isMobile ? -0.95 : -1.05, 0.5],
+      layout: 'icon-first',
+      orbitSpeed: 0.17,
+      orbitPhase: 5.3,
+    },
+  ], [isMobile]);
+
   useFrame((state, delta) => {
-    frameCountRef.current++;
-    if (frameCountRef.current === 1 || frameCountRef.current === 60) {
-      console.log('[DIAGNOSTIC] 5. HomeUniverseCore useFrame is running! Frame count:', frameCountRef.current, 'Camera pos:', state.camera.position.toArray());
-      if (globeGroupRef.current) {
-        console.log('[DIAGNOSTIC] 6,7,8. Globe world position:', globeGroupRef.current.position.toArray(), 'Globe scale:', globeGroupRef.current.scale.toArray());
-      }
-    }
     const t = state.clock.elapsedTime * (prefersReducedMotion ? 0.3 : 1.0);
 
-    // Continuous slow majestic globe rotation with gentle pointer responsiveness
+    // Continuous slow majestic globe rotation
     if (globeGroupRef.current) {
-      const targetRotationY = globeGroupRef.current.rotation.y + delta * (prefersReducedMotion ? 0.06 : 0.16);
-      const targetTiltX = -pointerPosRef.current.y * 0.12;
-      const targetTiltZ = pointerPosRef.current.x * 0.1;
+      const targetRotationY = globeGroupRef.current.rotation.y + delta * (prefersReducedMotion ? 0.05 : 0.14);
+      const targetTiltX = -pointerPosRef.current.y * 0.08;
+      const targetTiltZ = pointerPosRef.current.x * 0.06;
 
       globeGroupRef.current.rotation.y = targetRotationY;
-      globeGroupRef.current.rotation.x = THREE.MathUtils.lerp(globeGroupRef.current.rotation.x, targetTiltX, delta * 1.8);
-      globeGroupRef.current.rotation.z = THREE.MathUtils.lerp(globeGroupRef.current.rotation.z, targetTiltZ, delta * 1.8);
+      globeGroupRef.current.rotation.x = THREE.MathUtils.lerp(globeGroupRef.current.rotation.x, targetTiltX, delta * 1.5);
+      globeGroupRef.current.rotation.z = THREE.MathUtils.lerp(globeGroupRef.current.rotation.z, targetTiltZ, delta * 1.5);
     }
 
-    // Subtle breathing pulse of inner luminous core
     if (coreRef.current) {
       const pulse = 1.0 + (prefersReducedMotion ? 0 : Math.sin(t * 1.5) * 0.025);
       coreRef.current.scale.set(pulse, pulse, pulse);
     }
 
-    // Outer atmospheric glow fluctuation
     if (atmosphereRef.current) {
       const atmosPulse = 1.0 + (prefersReducedMotion ? 0 : Math.cos(t * 1.1) * 0.018);
       atmosphereRef.current.scale.set(atmosPulse, atmosPulse, atmosPulse);
     }
 
-    // Gentle orbital rings movement
     if (ringsGroupRef.current) {
-      ringsGroupRef.current.rotation.z += delta * (prefersReducedMotion ? 0.02 : 0.06);
-      ringsGroupRef.current.rotation.y = Math.sin(t * 0.3) * 0.08;
+      ringsGroupRef.current.rotation.z += delta * (prefersReducedMotion ? 0.015 : 0.04);
+      ringsGroupRef.current.rotation.y = Math.sin(t * 0.25) * 0.05;
     }
   });
 
-  // Compact, elegant Universe Core scale and positioning matching Reference 2:
-  // Desktop: compact diameter ~20–28% viewport width (~260-310px), sitting in upper-middle region
-  // Tablet: ~28–35% viewport width
-  // Mobile: ~45–55% viewport width
-  const globeScale = isMobile ? 0.36 : 0.46;
+  // Proportional sizing matching Reference 2:
+  // Compact globe in upper-middle hero region
+  const globeScale = isMobile ? 0.34 : 0.44;
   const globePosition: [number, number, number] = [0, isMobile ? 1.05 : 1.15, 0];
   const platformY = isMobile ? -1.15 : -1.35;
 
@@ -196,7 +232,7 @@ export function HomeUniverseCore({
             roughness={0.3}
             metalness={0.6}
             transparent
-            opacity={0.82}
+            opacity={0.85}
             emissive="#0284c7"
             emissiveIntensity={0.5}
           />
@@ -260,7 +296,7 @@ export function HomeUniverseCore({
           />
         </mesh>
 
-        {/* F. Minimal Dual Orbital Rings System (Proportional & Subtle) */}
+        {/* F. Minimal Dual Orbital Rings System */}
         <group ref={ringsGroupRef}>
           {/* Ring 1 - Slender Primary Cyan Orbit */}
           <group rotation={[Math.PI / 6, 0, 0]}>
@@ -299,6 +335,108 @@ export function HomeUniverseCore({
           </group>
         </group>
       </group>
+
+      {/* 4. The 5 Orbital Concept Nodes (BUILD, DEVELOP, INNOVATE, IDEAS, IMPACT) */}
+      <group>
+        {conceptNodes.map((node) => (
+          <ConceptOrbitalNode
+            key={node.id}
+            node={node}
+            isMobile={isMobile}
+            prefersReducedMotion={prefersReducedMotion}
+          />
+        ))}
+      </group>
+    </group>
+  );
+}
+
+// Subcomponent for each Concept Orbital Node around the Globe
+function ConceptOrbitalNode({
+  node,
+  isMobile,
+  prefersReducedMotion,
+}: {
+  node: ConceptNodeData;
+  isMobile: boolean;
+  prefersReducedMotion: boolean;
+}) {
+  const groupRef = useRef<THREE.Group>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    const t = state.clock.elapsedTime * (prefersReducedMotion ? 0.3 : 0.8) + node.orbitPhase;
+    // Gentle floating bob
+    const floatY = Math.sin(t * 1.4) * (isMobile ? 0.03 : 0.05);
+    const floatX = Math.cos(t * 1.1) * (isMobile ? 0.02 : 0.04);
+    groupRef.current.position.set(
+      node.pos[0] + floatX,
+      node.pos[1] + floatY,
+      node.pos[2]
+    );
+  });
+
+  const renderIcon = () => {
+    const iconProps = { className: 'w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-300' };
+    switch (node.icon) {
+      case 'code':
+        return <Code2 {...iconProps} />;
+      case 'box':
+        return <Box {...iconProps} />;
+      case 'lightbulb':
+        return <Lightbulb {...iconProps} />;
+      case 'cog':
+        return <Cog {...iconProps} />;
+      case 'target':
+        return <Target {...iconProps} />;
+    }
+  };
+
+  return (
+    <group ref={groupRef}>
+      {/* 3D Satellite Point Marker */}
+      <mesh>
+        <sphereGeometry args={[isMobile ? 0.04 : 0.06, 16, 16]} />
+        <meshBasicMaterial color="#00f5ff" blending={THREE.AdditiveBlending} />
+      </mesh>
+
+      {/* Cyber Concept Node Badge */}
+      <Html center distanceFactor={isMobile ? 12 : 9.5} zIndexRange={[15, 25]}>
+        <div
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className={`flex items-center gap-1.5 p-1 rounded-full border transition-all duration-300 cursor-pointer pointer-events-auto select-none backdrop-blur-md ${
+            isHovered
+              ? 'border-cyan-300 bg-[#031528]/95 scale-105 shadow-[0_0_24px_rgba(0,245,255,0.7)] ring-1 ring-cyan-400'
+              : 'border-cyan-500/60 bg-[#020d1c]/90 shadow-[0_0_14px_rgba(6,182,212,0.35)] hover:border-cyan-400'
+          }`}
+          style={{
+            transform: `scale(${isHovered ? 1.08 : 1.0})`,
+            transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+          }}
+        >
+          {node.layout === 'label-first' ? (
+            <>
+              <span className="font-orbitron text-[10px] sm:text-xs font-bold tracking-wider text-cyan-300 pl-2.5 pr-1">
+                {node.name}
+              </span>
+              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-cyan-400/80 bg-cyan-950/70 flex items-center justify-center shadow-[0_0_10px_rgba(0,245,255,0.5)]">
+                {renderIcon()}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-cyan-400/80 bg-cyan-950/70 flex items-center justify-center shadow-[0_0_10px_rgba(0,245,255,0.5)]">
+                {renderIcon()}
+              </div>
+              <span className="font-orbitron text-[10px] sm:text-xs font-bold tracking-wider text-cyan-300 pr-2.5 pl-1">
+                {node.name}
+              </span>
+            </>
+          )}
+        </div>
+      </Html>
     </group>
   );
 }
