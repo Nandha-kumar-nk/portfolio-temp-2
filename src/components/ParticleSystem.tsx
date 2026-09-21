@@ -40,6 +40,7 @@ export function ParticleSystem({
   isMobile = false,
   prefersReducedMotion = false,
 }: ParticleSystemProps) {
+  console.log('[ParticleSystem] mounted for scene:', currentScene);
   const pointsRef = useRef<THREE.Points>(null);
 
   const particlesData = useMemo<ParticleData[]>(() => {

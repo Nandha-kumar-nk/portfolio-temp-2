@@ -125,7 +125,7 @@ export function CinematicCamera({ currentScene, prefersReducedMotion = false }: 
         targetPos.set(
           mouseParallaxX * 0.4,
           verticalOffset + (isPortrait ? 0.4 : 0) + mouseParallaxY * 0.4,
-          8.5 * zDistanceMod
+          7.2 * zDistanceMod
         );
         lookTargetY = isPortrait ? 0.4 : 0;
         break;
@@ -165,7 +165,7 @@ export function CinematicCamera({ currentScene, prefersReducedMotion = false }: 
     // Smooth camera position interpolation
     const lerpSpeed = prefersReducedMotion ? Math.min(delta * 1.5, 0.08) : Math.min(delta * 2.2, 0.12);
     camera.position.lerp(targetPos, lerpSpeed);
-    const lookTargetX = currentScene === 7 ? 0 : (isPortrait ? 0.6 : 0.2);
+    const lookTargetX = (currentScene === 6 || currentScene === 7) ? 0 : (isPortrait ? 0.6 : 0.2);
     camera.lookAt(lookTargetX, lookTargetY, 0);
   });
 

@@ -9,6 +9,7 @@ import { ParticleSystem } from './ParticleSystem';
 import { CyberGlobe } from './CyberGlobe';
 import { HomeUniverseCore } from './3d/HomeUniverseCore';
 import { TransformingParticleField } from './3d/TransformingParticleField';
+import { Scene06Atmosphere } from './Scene06Atmosphere';
 import { isWebGLAvailable } from '../utils/webgl';
 import { WebGLErrorBoundary, WebGLCosmicFallback } from './WebGLErrorBoundary';
 
@@ -31,6 +32,7 @@ export function ExperienceCanvas({
   isDestroyed = false,
   destructionProgress = 0,
 }: ExperienceCanvasProps) {
+  console.log('[ExperienceCanvas] scene:', currentScene);
   const [webglSupported, setWebglSupported] = useState<boolean>(() => isWebGLAvailable());
 
   useEffect(() => {
@@ -38,6 +40,7 @@ export function ExperienceCanvas({
   }, []);
 
   if (!webglSupported) {
+    console.warn('[ExperienceCanvas] WebGL not supported, rendering fallback');
     return (
       <div
         className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none"
@@ -58,6 +61,7 @@ export function ExperienceCanvas({
           camera={{ position: [0, 0, 7], fov: 48, near: 0.1, far: 1000 }}
           dpr={quality.dpr}
           onCreated={({ gl }) => {
+            console.log('[R3F] WebGL renderer created', gl);
             const handleContextLost = (e: Event) => {
               e.preventDefault();
               console.warn('[ExperienceCanvas] WebGL context lost.');
@@ -115,6 +119,15 @@ export function ExperienceCanvas({
               techNodeCount={quality.techNodeCount}
               isMobile={quality.isMobile}
               prefersReducedMotion={quality.prefersReducedMotion}
+            />
+          )}
+
+          {/* Scene 6 Grand Atmosphere (Light rays, dust motes, tech rings) */}
+          {currentScene === 6 && (
+            <Scene06Atmosphere
+              isMobile={quality.isMobile}
+              prefersReducedMotion={quality.prefersReducedMotion}
+              transitionProgress={transitionProgress}
             />
           )}
 

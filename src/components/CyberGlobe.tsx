@@ -19,6 +19,7 @@ export function CyberGlobe({
   isMobile = false,
   prefersReducedMotion = false,
 }: CyberGlobeProps) {
+  console.log('[CyberGlobe] mounted for scene:', currentScene);
   const groupRef = useRef<THREE.Group>(null);
   const coreRef = useRef<THREE.Mesh>(null);
   const wireSphereRef = useRef<THREE.Mesh>(null);
@@ -86,42 +87,54 @@ export function CyberGlobe({
 
   if (!isVisible) return null;
 
-  const baseScale = isMobile ? 0.85 : 1.0;
+  const baseScale = isMobile ? 0.95 : 1.2;
 
   return (
     <group ref={groupRef} scale={[baseScale, baseScale, baseScale]} position={[0, 0, 0]}>
+      {/* 0. Solid Dark Obsidian Body with Cyan Emissive Glow */}
+      <mesh>
+        <sphereGeometry args={[1.78, 36, 36]} />
+        <meshStandardMaterial
+          color="#071827"
+          emissive="#00d9ff"
+          emissiveIntensity={isBeamActive ? 1.2 : 0.65}
+          roughness={0.25}
+          metalness={0.7}
+        />
+      </mesh>
+
       {/* 1. Luminous Inner Core */}
       <mesh ref={coreRef}>
-        <sphereGeometry args={[1.15, 32, 32]} />
+        <sphereGeometry args={[1.45, 32, 32]} />
         <meshBasicMaterial
-          color={isBeamActive ? '#67e8f9' : '#0284c7'}
+          color="#00f5ff"
           transparent
-          opacity={isBeamActive ? 0.85 : 0.45}
+          opacity={isBeamActive ? 0.95 : 0.75}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
 
       {/* 2. Holographic Latitude & Longitude Wireframe Globe */}
       <mesh ref={wireSphereRef}>
-        <sphereGeometry args={[1.85, 24, 24]} />
+        <sphereGeometry args={[1.92, 28, 28]} />
         <meshBasicMaterial
-          color={isBeamActive ? '#38bdf8' : '#0ea5e9'}
+          color="#00f5ff"
           wireframe
           transparent
-          opacity={isBeamActive ? 0.6 : 0.3}
+          opacity={isBeamActive ? 0.85 : 0.65}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
 
       {/* 3. Outer Atmospheric Fresnel Glow Shield */}
       <mesh>
-        <sphereGeometry args={[2.05, 32, 32]} />
+        <sphereGeometry args={[2.12, 32, 32]} />
         <meshBasicMaterial
-          color="#06b6d4"
+          color="#38bdf8"
           transparent
-          opacity={isBeamActive ? 0.35 : 0.15}
+          opacity={isBeamActive ? 0.45 : 0.3}
           blending={THREE.AdditiveBlending}
-          side={THREE.BackSide}
+          side={THREE.DoubleSide}
         />
       </mesh>
 

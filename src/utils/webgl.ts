@@ -12,19 +12,8 @@ export function isWebGLAvailable(): boolean {
       canvas.getContext('webgl') ||
       canvas.getContext('experimental-webgl');
 
-    if (!gl) {
-      cachedWebGLStatus = false;
-      return false;
-    }
-
-    // Release test context immediately to avoid wasting context quota
-    const ext = (gl as WebGLRenderingContext).getExtension('WEBGL_lose_context');
-    if (ext) {
-      ext.loseContext();
-    }
-
-    cachedWebGLStatus = true;
-    return true;
+    cachedWebGLStatus = !!gl;
+    return cachedWebGLStatus;
   } catch {
     cachedWebGLStatus = false;
     return false;
