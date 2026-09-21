@@ -42,7 +42,7 @@ export function GlowingPlatform({
     }
   });
 
-  const scale = isMobile ? 0.82 : 1.15;
+  const scale = isMobile ? 0.38 : 0.48;
 
   return (
     <group ref={platformRef} position={position} scale={[scale, scale, scale]}>

@@ -162,25 +162,26 @@ export function HomeUniverseCore({
     }
   });
 
-  // Proportional globe scale and position for balanced hero framing:
-  // Desktop: occupies ~35–45% viewport width, perfectly framing hero title & CTA
-  // Mobile: occupies ~55–65% viewport width without horizontal overflow
-  const globeScale = isMobile ? 0.58 : 0.76;
-  const globePosition: [number, number, number] = [0, isMobile ? 0.12 : 0.08, 0];
-  const platformY = isMobile ? -2.1 : -2.35;
+  // Compact, elegant Universe Core scale and positioning matching Reference 2:
+  // Desktop: compact diameter ~20–28% viewport width (~260-310px), sitting in upper-middle region
+  // Tablet: ~28–35% viewport width
+  // Mobile: ~45–55% viewport width
+  const globeScale = isMobile ? 0.36 : 0.46;
+  const globePosition: [number, number, number] = [0, isMobile ? 1.05 : 1.15, 0];
+  const platformY = isMobile ? -1.15 : -1.35;
 
   return (
     <group position={globePosition}>
-      {/* 1. Glowing Pedestal Platform beneath the Globe */}
+      {/* 1. Subtle Proportional Glowing Pedestal Platform beneath the Globe */}
       <GlowingPlatform
         position={[0, platformY, 0]}
         isMobile={isMobile}
         prefersReducedMotion={prefersReducedMotion}
       />
 
-      {/* 2. Floating Asteroids/Fragments around the environment */}
+      {/* 2. Floating Peripheral Crystal Fragments (Clean, non-intrusive) */}
       <FloatingAsteroids
-        count={qualityTier === 'LOW' ? 8 : qualityTier === 'MEDIUM' ? 14 : 18}
+        count={qualityTier === 'LOW' ? 6 : qualityTier === 'MEDIUM' ? 10 : 14}
         isMobile={isMobile}
         prefersReducedMotion={prefersReducedMotion}
       />
@@ -225,7 +226,7 @@ export function HomeUniverseCore({
             />
           </bufferGeometry>
           <pointsMaterial
-            size={isMobile ? 0.08 : 0.1}
+            size={isMobile ? 0.05 : 0.065}
             vertexColors
             transparent
             opacity={1.0}
@@ -259,12 +260,12 @@ export function HomeUniverseCore({
           />
         </mesh>
 
-        {/* F. Multi-Ring Futuristic Orbital System */}
+        {/* F. Minimal Dual Orbital Rings System (Proportional & Subtle) */}
         <group ref={ringsGroupRef}>
-          {/* Ring 1 - Slender Cyan Primary Orbit */}
+          {/* Ring 1 - Slender Primary Cyan Orbit */}
           <group rotation={[Math.PI / 6, 0, 0]}>
             <mesh>
-              <torusGeometry args={[2.7, 0.012, 16, 128]} />
+              <torusGeometry args={[2.45, 0.009, 16, 128]} />
               <meshBasicMaterial
                 color="#38bdf8"
                 transparent
@@ -273,67 +274,29 @@ export function HomeUniverseCore({
               />
             </mesh>
             {/* Satellite Node 1 */}
-            <mesh position={[2.7, 0, 0]}>
-              <sphereGeometry args={[0.05, 12, 12]} />
+            <mesh position={[2.45, 0, 0]}>
+              <sphereGeometry args={[0.045, 12, 12]} />
               <meshBasicMaterial color="#00f5ff" blending={THREE.AdditiveBlending} />
             </mesh>
           </group>
 
           {/* Ring 2 - Sky Blue Secondary Orbit (-35 deg tilt) */}
-          <group rotation={[-Math.PI / 4, Math.PI / 7, 0]}>
+          <group rotation={[-Math.PI / 4.5, Math.PI / 6.5, 0]}>
             <mesh>
-              <torusGeometry args={[3.2, 0.011, 16, 128]} />
+              <torusGeometry args={[2.9, 0.008, 16, 128]} />
               <meshBasicMaterial
                 color="#06b6d4"
                 transparent
-                opacity={0.6}
+                opacity={0.55}
                 blending={THREE.AdditiveBlending}
               />
             </mesh>
             {/* Satellite Node 2 */}
-            <mesh position={[-3.2, 0, 0]}>
-              <sphereGeometry args={[0.045, 12, 12]} />
+            <mesh position={[-2.9, 0, 0]}>
+              <sphereGeometry args={[0.04, 12, 12]} />
               <meshBasicMaterial color="#38bdf8" blending={THREE.AdditiveBlending} />
             </mesh>
           </group>
-
-          {/* Ring 3 - Deep Blue Tertiary Orbit (60 deg tilt) */}
-          <group rotation={[Math.PI / 3, -Math.PI / 6, Math.PI / 10]}>
-            <mesh>
-              <torusGeometry args={[3.75, 0.01, 16, 128]} />
-              <meshBasicMaterial
-                color="#0ea5e9"
-                transparent
-                opacity={0.5}
-                blending={THREE.AdditiveBlending}
-              />
-            </mesh>
-            {/* Satellite Node 3 */}
-            <mesh position={[0, 3.75, 0]}>
-              <sphereGeometry args={[0.04, 12, 12]} />
-              <meshBasicMaterial color="#818cf8" blending={THREE.AdditiveBlending} />
-            </mesh>
-          </group>
-
-          {/* Ring 4 - Outer Ethereal Violet / Cyan Orbit */}
-          {!isMobile && (
-            <group rotation={[-Math.PI / 5, Math.PI / 3, 0]}>
-              <mesh>
-                <torusGeometry args={[4.3, 0.009, 16, 128]} />
-                <meshBasicMaterial
-                  color="#818cf8"
-                  transparent
-                  opacity={0.4}
-                  blending={THREE.AdditiveBlending}
-                />
-              </mesh>
-              {/* Satellite Node 4 */}
-              <mesh position={[0, -4.3, 0]}>
-                <sphereGeometry args={[0.04, 12, 12]} />
-                <meshBasicMaterial color="#00f5ff" blending={THREE.AdditiveBlending} />
-              </mesh>
-            </group>
-          )}
         </group>
       </group>
     </group>

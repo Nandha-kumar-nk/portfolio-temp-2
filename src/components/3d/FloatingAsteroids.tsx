@@ -32,19 +32,19 @@ export function FloatingAsteroids({
     const data: AsteroidData[] = [];
     const effectiveCount = isMobile ? 8 : count;
 
-    // Fixed key asteroid anchors to mirror Reference 2 composition
+    // Subtle peripheral crystal fragments to keep hero center clean
     const fixedAnchors: Array<{ radius: number; theta: number; y: number; scale: number; polyType: 0 | 1 | 2; color: string }> = [
-      // Left side polyhedra
-      { radius: 5.2, theta: Math.PI * 0.85, y: 1.8, scale: 0.22, polyType: 1, color: '#38bdf8' },  // Upper left wireframe gem
-      { radius: 4.8, theta: Math.PI * 0.98, y: 0.2, scale: 0.28, polyType: 0, color: '#06b6d4' },  // Mid left cyan octahedron
-      { radius: 5.5, theta: Math.PI * 1.15, y: -1.6, scale: 0.38, polyType: 2, color: '#0284c7' }, // Lower left large metallic cyan octahedron
-      { radius: 3.8, theta: Math.PI * 0.75, y: 2.2, scale: 0.16, polyType: 1, color: '#818cf8' },  // High top left small fragment
+      // Left side subtle fragments
+      { radius: 6.2, theta: Math.PI * 0.85, y: 2.2, scale: 0.12, polyType: 1, color: '#38bdf8' },
+      { radius: 5.8, theta: Math.PI * 0.98, y: 0.4, scale: 0.14, polyType: 0, color: '#06b6d4' },
+      { radius: 6.5, theta: Math.PI * 1.15, y: -2.0, scale: 0.16, polyType: 2, color: '#0284c7' },
+      { radius: 5.0, theta: Math.PI * 0.75, y: 2.6, scale: 0.09, polyType: 1, color: '#818cf8' },
 
-      // Right side polyhedra
-      { radius: 5.6, theta: Math.PI * 0.15, y: 1.4, scale: 0.32, polyType: 0, color: '#38bdf8' },  // Upper right dark blue prism
-      { radius: 4.6, theta: Math.PI * 0.05, y: -0.4, scale: 0.24, polyType: 2, color: '#06b6d4' }, // Mid right cyan floating gem
-      { radius: 5.8, theta: Math.PI * 1.85, y: -2.0, scale: 0.44, polyType: 1, color: '#0ea5e9' }, // Lower right large deep blue icosahedron
-      { radius: 4.0, theta: Math.PI * 0.25, y: 2.5, scale: 0.18, polyType: 0, color: '#00f5ff' },  // Top right small crystal
+      // Right side subtle fragments
+      { radius: 6.4, theta: Math.PI * 0.15, y: 2.0, scale: 0.14, polyType: 0, color: '#38bdf8' },
+      { radius: 5.6, theta: Math.PI * 0.05, y: -0.6, scale: 0.12, polyType: 2, color: '#06b6d4' },
+      { radius: 6.8, theta: Math.PI * 1.85, y: -2.2, scale: 0.18, polyType: 1, color: '#0ea5e9' },
+      { radius: 5.2, theta: Math.PI * 0.25, y: 2.8, scale: 0.10, polyType: 0, color: '#00f5ff' },
     ];
 
     for (let i = 0; i < effectiveCount; i++) {
@@ -54,23 +54,23 @@ export function FloatingAsteroids({
           radius: anchor.radius * (isMobile ? 0.75 : 1.0),
           theta: anchor.theta,
           y: anchor.y * (isMobile ? 0.8 : 1.0),
-          orbitSpeed: (0.02 + Math.random() * 0.03) * (i % 2 === 0 ? 1 : -1),
-          rotationSpeed: [(Math.random() - 0.5) * 0.8, (Math.random() - 0.5) * 1.0, (Math.random() - 0.5) * 0.6],
-          scale: anchor.scale * (isMobile ? 0.7 : 1.0),
+          orbitSpeed: (0.012 + Math.random() * 0.02) * (i % 2 === 0 ? 1 : -1),
+          rotationSpeed: [(Math.random() - 0.5) * 0.5, (Math.random() - 0.5) * 0.6, (Math.random() - 0.5) * 0.4],
+          scale: anchor.scale * (isMobile ? 0.65 : 0.9),
           polyType: anchor.polyType,
           color: anchor.color,
         });
       } else {
-        const radius = (isMobile ? 3.2 : 4.2) + Math.random() * 2.5;
+        const radius = (isMobile ? 4.5 : 5.8) + Math.random() * 2.0;
         const theta = Math.random() * Math.PI * 2;
-        const y = (Math.random() - 0.5) * (isMobile ? 3.5 : 5.0);
+        const y = (Math.random() - 0.5) * (isMobile ? 3.0 : 4.5);
         data.push({
           radius,
           theta,
           y,
-          orbitSpeed: (0.015 + Math.random() * 0.035) * (i % 2 === 0 ? 1 : -1),
-          rotationSpeed: [(Math.random() - 0.5) * 0.8, (Math.random() - 0.5) * 1.0, (Math.random() - 0.5) * 0.6],
-          scale: (0.12 + Math.random() * 0.18) * (isMobile ? 0.75 : 1.0),
+          orbitSpeed: (0.01 + Math.random() * 0.02) * (i % 2 === 0 ? 1 : -1),
+          rotationSpeed: [(Math.random() - 0.5) * 0.5, (Math.random() - 0.5) * 0.6, (Math.random() - 0.5) * 0.4],
+          scale: (0.06 + Math.random() * 0.08) * (isMobile ? 0.65 : 0.9),
           polyType: (i % 3) as 0 | 1 | 2,
           color: i % 4 === 0 ? '#38bdf8' : i % 4 === 1 ? '#06b6d4' : i % 4 === 2 ? '#818cf8' : '#00f5ff',
         });
