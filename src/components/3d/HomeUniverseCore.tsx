@@ -20,6 +20,7 @@ interface ConceptNodeData {
   layout: 'icon-first' | 'label-first';
   orbitSpeed: number;
   orbitPhase: number;
+  connectionTarget: [number, number, number];
 }
 
 export function HomeUniverseCore({
@@ -32,6 +33,7 @@ export function HomeUniverseCore({
   const atmosphereRef = useRef<THREE.Mesh>(null);
   const ringsGroupRef = useRef<THREE.Group>(null);
   const pointerPosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
 
   // Track pointer for subtle interactive globe tilt
   useEffect(() => {
@@ -70,16 +72,16 @@ export function HomeUniverseCore({
 
   // Continental coordinate nodes
   const { continentPositions, continentColors } = useMemo(() => {
-    const pointCount = qualityTier === 'LOW' ? 240 : qualityTier === 'MEDIUM' ? 380 : 520;
+    const pointCount = qualityTier === 'LOW' ? 220 : qualityTier === 'MEDIUM' ? 340 : 460;
     const pos = new Float32Array(pointCount * 3);
     const col = new Float32Array(pointCount * 3);
 
     const continentalCenters = [
-      { lat: 40, lon: -100, spread: 30 },
-      { lat: -15, lon: -60, spread: 26 },
-      { lat: 50, lon: 15, spread: 22 },
-      { lat: 5, lon: 25, spread: 30 },
-      { lat: 45, lon: 85, spread: 38 },
+      { lat: 40, lon: -100, spread: 28 },
+      { lat: -15, lon: -60, spread: 24 },
+      { lat: 50, lon: 15, spread: 20 },
+      { lat: 5, lon: 25, spread: 28 },
+      { lat: 45, lon: 85, spread: 35 },
       { lat: -25, lon: 135, spread: 18 },
       { lat: 25, lon: 55, spread: 16 },
     ];
@@ -120,53 +122,59 @@ export function HomeUniverseCore({
     return { continentPositions: pos, continentColors: col };
   }, [qualityTier]);
 
-  // 5 Concept Nodes configuration matching the reference image layout:
-  // BUILD (Top), DEVELOP (Mid-Left), INNOVATE (Mid-Right), IDEAS (Bottom-Left), IMPACT (Bottom-Right)
+  // 5 Concept Nodes arrangement surrounding the compact globe:
+  // BUILD (Top, clearly visible below navbar), DEVELOP (Upper-Left), INNOVATE (Upper-Right),
+  // IDEAS (Lower-Left), IMPACT (Lower-Right)
   const conceptNodes: ConceptNodeData[] = useMemo(() => [
     {
       id: 'build',
       name: 'BUILD',
       icon: 'box',
-      pos: [isMobile ? 0.7 : 0.95, isMobile ? 1.85 : 2.15, 0.3],
+      pos: [isMobile ? 0.15 : 0.28, isMobile ? 1.35 : 1.55, 0.25],
       layout: 'icon-first',
       orbitSpeed: 0.15,
       orbitPhase: 0.2,
+      connectionTarget: [0.2, 1.0, 0.1],
     },
     {
       id: 'develop',
       name: 'DEVELOP',
       icon: 'code',
-      pos: [isMobile ? -1.85 : -2.35, isMobile ? 0.95 : 1.15, 0.4],
+      pos: [isMobile ? -1.65 : -2.15, isMobile ? 0.55 : 0.65, 0.35],
       layout: 'label-first',
       orbitSpeed: 0.18,
       orbitPhase: 1.4,
+      connectionTarget: [-1.0, 0.45, 0.1],
     },
     {
       id: 'innovate',
       name: 'INNOVATE',
       icon: 'lightbulb',
-      pos: [isMobile ? 1.85 : 2.35, isMobile ? 0.45 : 0.55, 0.5],
+      pos: [isMobile ? 1.65 : 2.15, isMobile ? 0.35 : 0.45, 0.35],
       layout: 'icon-first',
       orbitSpeed: 0.16,
       orbitPhase: 2.8,
+      connectionTarget: [1.0, 0.35, 0.1],
     },
     {
       id: 'ideas',
       name: 'IDEAS',
       icon: 'cog',
-      pos: [isMobile ? -1.65 : -2.05, isMobile ? -0.85 : -0.95, 0.4],
+      pos: [isMobile ? -1.45 : -1.85, isMobile ? -0.55 : -0.65, 0.35],
       layout: 'label-first',
       orbitSpeed: 0.2,
       orbitPhase: 4.1,
+      connectionTarget: [-0.9, -0.4, 0.1],
     },
     {
       id: 'impact',
       name: 'IMPACT',
       icon: 'target',
-      pos: [isMobile ? 1.55 : 1.85, isMobile ? -0.95 : -1.05, 0.5],
+      pos: [isMobile ? 1.45 : 1.75, isMobile ? -0.65 : -0.75, 0.35],
       layout: 'icon-first',
       orbitSpeed: 0.17,
       orbitPhase: 5.3,
+      connectionTarget: [0.85, -0.45, 0.1],
     },
   ], [isMobile]);
 
@@ -175,9 +183,9 @@ export function HomeUniverseCore({
 
     // Continuous slow majestic globe rotation
     if (globeGroupRef.current) {
-      const targetRotationY = globeGroupRef.current.rotation.y + delta * (prefersReducedMotion ? 0.05 : 0.14);
-      const targetTiltX = -pointerPosRef.current.y * 0.08;
-      const targetTiltZ = pointerPosRef.current.x * 0.06;
+      const targetRotationY = globeGroupRef.current.rotation.y + delta * (prefersReducedMotion ? 0.05 : 0.12);
+      const targetTiltX = -pointerPosRef.current.y * 0.06;
+      const targetTiltZ = pointerPosRef.current.x * 0.05;
 
       globeGroupRef.current.rotation.y = targetRotationY;
       globeGroupRef.current.rotation.x = THREE.MathUtils.lerp(globeGroupRef.current.rotation.x, targetTiltX, delta * 1.5);
@@ -195,16 +203,16 @@ export function HomeUniverseCore({
     }
 
     if (ringsGroupRef.current) {
-      ringsGroupRef.current.rotation.z += delta * (prefersReducedMotion ? 0.015 : 0.04);
-      ringsGroupRef.current.rotation.y = Math.sin(t * 0.25) * 0.05;
+      ringsGroupRef.current.rotation.z += delta * (prefersReducedMotion ? 0.012 : 0.035);
+      ringsGroupRef.current.rotation.y = Math.sin(t * 0.25) * 0.04;
     }
   });
 
-  // Proportional sizing matching Reference 2:
-  // Compact globe in upper-middle hero region
-  const globeScale = isMobile ? 0.34 : 0.44;
-  const globePosition: [number, number, number] = [0, isMobile ? 1.05 : 1.15, 0];
-  const platformY = isMobile ? -1.15 : -1.35;
+  // Proportional sizing matching Visual Reference:
+  // Compact globe in upper-middle hero region (approx 220-280px visual diameter)
+  const globeScale = isMobile ? 0.32 : 0.40;
+  const globePosition: [number, number, number] = [0, isMobile ? 0.72 : 0.85, 0];
+  const platformY = isMobile ? -1.05 : -1.2;
 
   return (
     <group position={globePosition}>
@@ -217,7 +225,7 @@ export function HomeUniverseCore({
 
       {/* 2. Floating Peripheral Crystal Fragments (Clean, non-intrusive) */}
       <FloatingAsteroids
-        count={qualityTier === 'LOW' ? 6 : qualityTier === 'MEDIUM' ? 10 : 14}
+        count={qualityTier === 'LOW' ? 4 : qualityTier === 'MEDIUM' ? 8 : 10}
         isMobile={isMobile}
         prefersReducedMotion={prefersReducedMotion}
       />
@@ -226,7 +234,7 @@ export function HomeUniverseCore({
       <group ref={globeGroupRef} scale={[globeScale, globeScale, globeScale]}>
         {/* A. Dark Oceanic Obsidian Inner Body */}
         <mesh>
-          <sphereGeometry args={[1.84, 40, 40]} />
+          <sphereGeometry args={[1.84, 36, 36]} />
           <meshStandardMaterial
             color="#051c38"
             roughness={0.3}
@@ -296,12 +304,12 @@ export function HomeUniverseCore({
           />
         </mesh>
 
-        {/* F. Minimal Dual Orbital Rings System */}
+        {/* F. Slender 3-Orbit System around the Globe */}
         <group ref={ringsGroupRef}>
-          {/* Ring 1 - Slender Primary Cyan Orbit */}
+          {/* Orbit Ring 1 - Slender Primary Cyan Orbit */}
           <group rotation={[Math.PI / 6, 0, 0]}>
             <mesh>
-              <torusGeometry args={[2.45, 0.009, 16, 128]} />
+              <torusGeometry args={[2.35, 0.008, 16, 128]} />
               <meshBasicMaterial
                 color="#38bdf8"
                 transparent
@@ -309,17 +317,17 @@ export function HomeUniverseCore({
                 blending={THREE.AdditiveBlending}
               />
             </mesh>
-            {/* Satellite Node 1 */}
-            <mesh position={[2.45, 0, 0]}>
+            {/* Satellite 1 */}
+            <mesh position={[2.35, 0, 0]}>
               <sphereGeometry args={[0.045, 12, 12]} />
               <meshBasicMaterial color="#00f5ff" blending={THREE.AdditiveBlending} />
             </mesh>
           </group>
 
-          {/* Ring 2 - Sky Blue Secondary Orbit (-35 deg tilt) */}
+          {/* Orbit Ring 2 - Sky Blue Secondary Orbit (-35 deg tilt) */}
           <group rotation={[-Math.PI / 4.5, Math.PI / 6.5, 0]}>
             <mesh>
-              <torusGeometry args={[2.9, 0.008, 16, 128]} />
+              <torusGeometry args={[2.75, 0.007, 16, 128]} />
               <meshBasicMaterial
                 color="#06b6d4"
                 transparent
@@ -327,16 +335,41 @@ export function HomeUniverseCore({
                 blending={THREE.AdditiveBlending}
               />
             </mesh>
-            {/* Satellite Node 2 */}
-            <mesh position={[-2.9, 0, 0]}>
+            {/* Satellite 2 */}
+            <mesh position={[-2.75, 0, 0]}>
               <sphereGeometry args={[0.04, 12, 12]} />
               <meshBasicMaterial color="#38bdf8" blending={THREE.AdditiveBlending} />
+            </mesh>
+          </group>
+
+          {/* Orbit Ring 3 - Faint outer subtle halo orbit */}
+          <group rotation={[Math.PI / 3.5, -Math.PI / 5, 0]}>
+            <mesh>
+              <torusGeometry args={[3.15, 0.006, 16, 128]} />
+              <meshBasicMaterial
+                color="#0ea5e9"
+                transparent
+                opacity={0.4}
+                blending={THREE.AdditiveBlending}
+              />
             </mesh>
           </group>
         </group>
       </group>
 
-      {/* 4. The 5 Orbital Concept Nodes (BUILD, DEVELOP, INNOVATE, IDEAS, IMPACT) */}
+      {/* 4. Delicate Connection Lines linking Nodes to Orbital Hub */}
+      <group>
+        {conceptNodes.map((node) => (
+          <OrbitalConnectionLine
+            key={`line-${node.id}`}
+            startPos={node.pos}
+            endPos={node.connectionTarget}
+            isHovered={hoveredNodeId === node.id}
+          />
+        ))}
+      </group>
+
+      {/* 5. The 5 Orbital Concept Nodes (BUILD, DEVELOP, INNOVATE, IDEAS, IMPACT) */}
       <group>
         {conceptNodes.map((node) => (
           <ConceptOrbitalNode
@@ -344,10 +377,42 @@ export function HomeUniverseCore({
             node={node}
             isMobile={isMobile}
             prefersReducedMotion={prefersReducedMotion}
+            isHovered={hoveredNodeId === node.id}
+            onHover={(hover) => setHoveredNodeId(hover ? node.id : null)}
           />
         ))}
       </group>
     </group>
+  );
+}
+
+// Subcomponent for delicate glowing connection line from orbital system to each node
+function OrbitalConnectionLine({
+  startPos,
+  endPos,
+  isHovered,
+}: {
+  startPos: [number, number, number];
+  endPos: [number, number, number];
+  isHovered: boolean;
+}) {
+  const lineGeom = useMemo(() => {
+    const points = [
+      new THREE.Vector3(...startPos),
+      new THREE.Vector3(...endPos),
+    ];
+    return new THREE.BufferGeometry().setFromPoints(points);
+  }, [startPos, endPos]);
+
+  return (
+    <line geometry={lineGeom}>
+      <lineBasicMaterial
+        color={isHovered ? '#00f5ff' : '#06b6d4'}
+        transparent
+        opacity={isHovered ? 0.75 : 0.3}
+        blending={THREE.AdditiveBlending}
+      />
+    </line>
   );
 }
 
@@ -356,20 +421,23 @@ function ConceptOrbitalNode({
   node,
   isMobile,
   prefersReducedMotion,
+  isHovered,
+  onHover,
 }: {
   node: ConceptNodeData;
   isMobile: boolean;
   prefersReducedMotion: boolean;
+  isHovered: boolean;
+  onHover: (hover: boolean) => void;
 }) {
   const groupRef = useRef<THREE.Group>(null);
-  const [isHovered, setIsHovered] = useState(false);
 
   useFrame((state) => {
     if (!groupRef.current) return;
-    const t = state.clock.elapsedTime * (prefersReducedMotion ? 0.3 : 0.8) + node.orbitPhase;
+    const t = state.clock.elapsedTime * (prefersReducedMotion ? 0.3 : 0.7) + node.orbitPhase;
     // Gentle floating bob
-    const floatY = Math.sin(t * 1.4) * (isMobile ? 0.03 : 0.05);
-    const floatX = Math.cos(t * 1.1) * (isMobile ? 0.02 : 0.04);
+    const floatY = Math.sin(t * 1.3) * (isMobile ? 0.025 : 0.04);
+    const floatX = Math.cos(t * 1.0) * (isMobile ? 0.015 : 0.03);
     groupRef.current.position.set(
       node.pos[0] + floatX,
       node.pos[1] + floatY,
@@ -397,40 +465,51 @@ function ConceptOrbitalNode({
     <group ref={groupRef}>
       {/* 3D Satellite Point Marker */}
       <mesh>
-        <sphereGeometry args={[isMobile ? 0.04 : 0.06, 16, 16]} />
-        <meshBasicMaterial color="#00f5ff" blending={THREE.AdditiveBlending} />
+        <sphereGeometry args={[isMobile ? 0.035 : 0.05, 16, 16]} />
+        <meshBasicMaterial
+          color={isHovered ? '#ffffff' : '#00f5ff'}
+          blending={THREE.AdditiveBlending}
+        />
       </mesh>
 
       {/* Cyber Concept Node Badge */}
-      <Html center distanceFactor={isMobile ? 12 : 9.5} zIndexRange={[15, 25]}>
+      <Html center distanceFactor={isMobile ? 11 : 9.2} zIndexRange={[15, 25]}>
         <div
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          onMouseEnter={() => onHover(true)}
+          onMouseLeave={() => onHover(false)}
           className={`flex items-center gap-1.5 p-1 rounded-full border transition-all duration-300 cursor-pointer pointer-events-auto select-none backdrop-blur-md ${
             isHovered
-              ? 'border-cyan-300 bg-[#031528]/95 scale-105 shadow-[0_0_24px_rgba(0,245,255,0.7)] ring-1 ring-cyan-400'
+              ? 'border-cyan-300 bg-[#031528]/95 shadow-[0_0_24px_rgba(0,245,255,0.8)] ring-1 ring-cyan-400'
               : 'border-cyan-500/60 bg-[#020d1c]/90 shadow-[0_0_14px_rgba(6,182,212,0.35)] hover:border-cyan-400'
           }`}
           style={{
-            transform: `scale(${isHovered ? 1.08 : 1.0})`,
+            transform: `scale(${isHovered ? 1.06 : 1.0})`,
             transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
           }}
         >
           {node.layout === 'label-first' ? (
             <>
-              <span className="font-orbitron text-[10px] sm:text-xs font-bold tracking-wider text-cyan-300 pl-2.5 pr-1">
+              <span className="font-orbitron text-[10px] sm:text-xs font-bold tracking-wider text-cyan-300 pl-2.5 pr-1 whitespace-nowrap">
                 {node.name}
               </span>
-              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-cyan-400/80 bg-cyan-950/70 flex items-center justify-center shadow-[0_0_10px_rgba(0,245,255,0.5)]">
+              <div
+                className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-cyan-400/80 bg-cyan-950/70 flex items-center justify-center transition-all ${
+                  isHovered ? 'shadow-[0_0_12px_rgba(0,245,255,0.8)] scale-105' : 'shadow-[0_0_8px_rgba(0,245,255,0.4)]'
+                }`}
+              >
                 {renderIcon()}
               </div>
             </>
           ) : (
             <>
-              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-cyan-400/80 bg-cyan-950/70 flex items-center justify-center shadow-[0_0_10px_rgba(0,245,255,0.5)]">
+              <div
+                className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-cyan-400/80 bg-cyan-950/70 flex items-center justify-center transition-all ${
+                  isHovered ? 'shadow-[0_0_12px_rgba(0,245,255,0.8)] scale-105' : 'shadow-[0_0_8px_rgba(0,245,255,0.4)]'
+                }`}
+              >
                 {renderIcon()}
               </div>
-              <span className="font-orbitron text-[10px] sm:text-xs font-bold tracking-wider text-cyan-300 pr-2.5 pl-1">
+              <span className="font-orbitron text-[10px] sm:text-xs font-bold tracking-wider text-cyan-300 pr-2.5 pl-1 whitespace-nowrap">
                 {node.name}
               </span>
             </>

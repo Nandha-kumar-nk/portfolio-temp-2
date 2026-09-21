@@ -128,13 +128,18 @@ export function TransformingParticleField({
     const nkPos = generateNkPositions(particleCount);
 
     for (let i = 0; i < particleCount; i++) {
-      // 1. Home Globe & Orbital Swarm Pos
-      const radius = 2.0 + (Math.random() - 0.5) * 1.6;
+      // 1. Home Globe & Orbital Swarm Pos (Targeted density around upper orbital system, clean typography zone)
+      const radius = 1.9 + (Math.random() - 0.5) * 1.5;
       const theta = Math.random() * Math.PI * 2;
       const phi = (Math.random() - 0.5) * Math.PI;
-      const homeX = radius * Math.cos(theta) * Math.cos(phi);
-      const homeY = radius * Math.sin(phi);
-      const homeZ = radius * Math.sin(theta) * Math.cos(phi);
+      let homeX = radius * Math.cos(theta) * Math.cos(phi);
+      let homeY = radius * Math.sin(phi) + 0.85;
+      let homeZ = radius * Math.sin(theta) * Math.cos(phi);
+
+      // Deflect particles away from the central typography text area (y < 0.2 and |x| < 3.2)
+      if (homeY < 0.2 && Math.abs(homeX) < 3.2) {
+        homeY += 1.6;
+      }
 
       // 2. About Flowing Ribbon Pos
       const ribbonT = (i / particleCount) * 14 - 7;
@@ -435,7 +440,7 @@ export function TransformingParticleField({
           map={particleTexture || undefined}
           vertexColors
           transparent
-          opacity={0.88}
+          opacity={scrollSectionProgress < 0.5 ? 0.62 : 0.88}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
         />
