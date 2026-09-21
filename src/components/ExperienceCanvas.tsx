@@ -44,11 +44,13 @@ export function ExperienceCanvas({
         <Canvas
           camera={{ position: [0, 0, 7], fov: 48, near: 0.1, far: 1000 }}
           dpr={quality.dpr}
-          onCreated={({ gl, camera, scene }) => {
-            console.log('[R3F] WebGL renderer created');
-            console.log('[R3F] Canvas:', gl.domElement);
-            console.log('[R3F] Camera:', camera);
-            console.log('[R3F] Scene:', scene);
+          onCreated={({ gl }) => {
+            const ctx = gl.getContext();
+            console.log('[R3F] WebGL renderer created successfully', {
+              renderer: gl,
+              vendor: ctx ? ctx.getParameter(ctx.VENDOR) : 'Unknown',
+              rendererInfo: ctx ? ctx.getParameter(ctx.RENDERER) : 'Unknown',
+            });
             const handleContextLost = (e: Event) => {
               e.preventDefault();
               console.warn('[ExperienceCanvas] WebGL context lost.');
