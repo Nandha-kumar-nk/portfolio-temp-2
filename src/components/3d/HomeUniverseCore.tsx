@@ -110,15 +110,18 @@ export function HomeUniverseCore({
       pos[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
 
       const pick = Math.random();
-      if (pick > 0.7) {
-        // Pure White-Cyan Highlight
-        col[i * 3] = 0.96; col[i * 3 + 1] = 0.99; col[i * 3 + 2] = 1.0;
-      } else if (pick > 0.3) {
-        // Bright Electric Cyan (#00D9FF / #19E6FF)
+      if (pick > 0.85) {
+        // Bright edge highlight (#B8F7FF)
+        col[i * 3] = 0.72; col[i * 3 + 1] = 0.97; col[i * 3 + 2] = 1.0;
+      } else if (pick > 0.5) {
+        // Primary Electric Cyan (#00D9FF)
         col[i * 3] = 0.0; col[i * 3 + 1] = 0.85; col[i * 3 + 2] = 1.0;
+      } else if (pick > 0.2) {
+        // Vibrant Light Blue (#38BDF8)
+        col[i * 3] = 0.22; col[i * 3 + 1] = 0.74; col[i * 3 + 2] = 0.97;
       } else {
-        // Light Cyan (#5CEFFF)
-        col[i * 3] = 0.36; col[i * 3 + 1] = 0.94; col[i * 3 + 2] = 1.0;
+        // Cyan Highlight (#7DEBFF)
+        col[i * 3] = 0.49; col[i * 3 + 1] = 0.92; col[i * 3 + 2] = 1.0;
       }
     }
 
@@ -235,27 +238,27 @@ export function HomeUniverseCore({
 
       {/* 3. The Central Rotating Universe Globe Core */}
       <group ref={globeGroupRef} scale={[globeScale, globeScale, globeScale]}>
-        {/* A. Dark Oceanic Obsidian Inner Body */}
+        {/* A. Deep Inner Electric Blue Body (#0878D1 + #00D9FF glow) */}
         <mesh>
           <sphereGeometry args={[1.84, 36, 36]} />
           <meshStandardMaterial
-            color="#020914"
-            roughness={0.25}
-            metalness={0.7}
+            color="#0878D1"
+            roughness={0.3}
+            metalness={0.65}
             transparent
-            opacity={0.88}
-            emissive="#00d9ff"
-            emissiveIntensity={0.65}
+            opacity={0.85}
+            emissive="#00D9FF"
+            emissiveIntensity={0.55}
           />
         </mesh>
 
-        {/* B. Inner Luminous Core (Electric Blue Glow #00D9FF) */}
+        {/* B. Inner Luminous Core (Electric Blue Glow #0878D1 / #00D9FF) */}
         <mesh ref={coreRef}>
           <sphereGeometry args={[1.48, 32, 32]} />
           <meshBasicMaterial
-            color="#00d9ff"
+            color="#0878D1"
             transparent
-            opacity={0.85}
+            opacity={0.7}
             blending={THREE.AdditiveBlending}
           />
         </mesh>
@@ -283,25 +286,25 @@ export function HomeUniverseCore({
           />
         </points>
 
-        {/* D. Delicate Holographic Longitude & Latitude Wireframe Grid (#19E6FF) */}
+        {/* D. Bright Cyan Holographic Longitude & Latitude Wireframe Grid (#00D9FF / #38BDF8) */}
         <mesh>
           <sphereGeometry args={[1.94, 28, 28]} />
           <meshBasicMaterial
-            color="#19e6ff"
+            color="#00D9FF"
             wireframe
             transparent
-            opacity={0.55}
+            opacity={0.65}
             blending={THREE.AdditiveBlending}
           />
         </mesh>
 
-        {/* E. Atmospheric Volumetric Glow Shield (Fresnel Effect #00D9FF / #5CEFFF) */}
+        {/* E. Atmospheric Volumetric Glow Shield (Soft Light Cyan #38BDF8) */}
         <mesh ref={atmosphereRef}>
           <sphereGeometry args={[2.15, 32, 32]} />
           <meshBasicMaterial
-            color="#00d9ff"
+            color="#38BDF8"
             transparent
-            opacity={0.4}
+            opacity={0.32}
             side={THREE.DoubleSide}
             blending={THREE.AdditiveBlending}
           />
