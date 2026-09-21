@@ -1,6 +1,8 @@
 import React, { useMemo, useRef, useEffect, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { isWebGLAvailable } from '../../utils/webgl';
+import { WebGLErrorBoundary, WebGLCosmicFallback } from '../WebGLErrorBoundary';
 
 export interface Dna3DSceneProps {
   stageIndex: number; // 0 to 5
@@ -536,16 +538,14 @@ export const Dna3DScene: React.FC<Dna3DSceneProps> = ({
   const totalHeight = isMobile ? 2.0 : 2.4;
   const pedestalY = -totalHeight / 2 - 0.06;
 
-  if (!isInView) {
+  if (!isInView || !isWebGLAvailable()) {
     return (
       <div
         ref={containerRef}
         id={isMobile ? 'mobile-3d-dna-canvas' : 'desktop-3d-dna-canvas'}
         className="relative w-full h-full flex items-center justify-center select-none overflow-hidden"
       >
-        <div className="w-16 h-28 rounded-xl border border-cyan-500/30 bg-slate-950/50 flex items-center justify-center animate-pulse">
-          <span className="text-[10px] font-mono text-cyan-400">DNA</span>
-        </div>
+        <WebGLCosmicFallback className="w-full h-full" />
       </div>
     );
   }
@@ -556,47 +556,56 @@ export const Dna3DScene: React.FC<Dna3DSceneProps> = ({
       id={isMobile ? 'mobile-3d-dna-canvas' : 'desktop-3d-dna-canvas'}
       className="relative w-full h-full flex items-center justify-center select-none overflow-hidden"
     >
-      <Canvas
-        camera={{
-          position: isMobile ? [0, 0.15, 3.1] : [0, 0.2, 3.3],
-          fov: isMobile ? 40 : 38,
-          near: 0.1,
-          far: 20,
-        }}
-        dpr={isMobile ? [1, 1] : [1, 1.5]}
-        gl={{ antialias: true, alpha: true }}
-      >
-        <ambientLight intensity={0.45} color="#040c1e" />
-        <directionalLight position={[2, 3.5, 2.5]} intensity={1.5} color="#f0f9ff" />
-        <directionalLight
-          position={[-2.5, -0.5, 1.2]}
-          intensity={0.8}
-          color={stageIndex === 0 ? '#ff4d4d' : '#00f5ff'}
-        />
-        <directionalLight position={[0, -2, 1.5]} intensity={0.5} color="#0284c7" />
+      <WebGLErrorBoundary fallback={<WebGLCosmicFallback className="w-full h-full" />} name="Dna3DScene">
+        <Canvas
+          camera={{
+            position: isMobile ? [0, 0.15, 3.1] : [0, 0.2, 3.3],
+            fov: isMobile ? 40 : 38,
+            near: 0.1,
+            far: 20,
+          }}
+          dpr={isMobile ? [1, 1] : [1, 1.5]}
+          onCreated={({ gl }) => {
+            const handleContextLost = (e: Event) => {
+              e.preventDefault();
+              console.warn('[Dna3DScene] WebGL context lost.');
+            };
+            gl.domElement.addEventListener('webglcontextlost', handleContextLost, false);
+          }}
+          gl={{ antialias: true, alpha: true }}
+        >
+          <ambientLight intensity={0.45} color="#040c1e" />
+          <directionalLight position={[2, 3.5, 2.5]} intensity={1.5} color="#f0f9ff" />
+          <directionalLight
+            position={[-2.5, -0.5, 1.2]}
+            intensity={0.8}
+            color={stageIndex === 0 ? '#ff4d4d' : '#00f5ff'}
+          />
+          <directionalLight position={[0, -2, 1.5]} intensity={0.5} color="#0284c7" />
 
-        {/* Small Pedestal at the Base */}
-        <DnaPedestal yPos={pedestalY} isMobile={isMobile} stageIndex={stageIndex} />
+          {/* Small Pedestal at the Base */}
+          <DnaPedestal yPos={pedestalY} isMobile={isMobile} stageIndex={stageIndex} />
 
-        {/* Sleek Vertical 3D Helix Mesh */}
-        <SleekVerticalDnaMesh
-          stageIndex={stageIndex}
-          maxFormedIndex={maxFormedIndex}
-          isMobile={isMobile}
-          reducedMotion={reducedMotion}
-        />
+          {/* Sleek Vertical 3D Helix Mesh */}
+          <SleekVerticalDnaMesh
+            stageIndex={stageIndex}
+            maxFormedIndex={maxFormedIndex}
+            isMobile={isMobile}
+            reducedMotion={reducedMotion}
+          />
 
-        {/* Dynamic Particles */}
-        <DynamicAtmosphericParticles
-          count={isMobile ? 35 : 120}
-          rangeY={totalHeight * 1.3}
-          stageIndex={stageIndex}
-          reducedMotion={reducedMotion}
-        />
+          {/* Dynamic Particles */}
+          <DynamicAtmosphericParticles
+            count={isMobile ? 35 : 120}
+            rangeY={totalHeight * 1.3}
+            stageIndex={stageIndex}
+            reducedMotion={reducedMotion}
+          />
 
-        {/* Perspective Parallax Controller */}
-        <CameraParallax isMobile={isMobile} reducedMotion={reducedMotion} />
-      </Canvas>
+          {/* Perspective Parallax Controller */}
+          <CameraParallax isMobile={isMobile} reducedMotion={reducedMotion} />
+        </Canvas>
+      </WebGLErrorBoundary>
     </div>
   );
 };

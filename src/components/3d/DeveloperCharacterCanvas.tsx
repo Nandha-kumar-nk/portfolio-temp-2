@@ -2,6 +2,8 @@ import React, { Suspense, useRef, useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { DeveloperCharacter, CharacterPose } from './DeveloperCharacter';
 import * as THREE from 'three';
+import { isWebGLAvailable } from '../../utils/webgl';
+import { WebGLErrorBoundary } from '../WebGLErrorBoundary';
 
 interface DeveloperCharacterCanvasProps {
   pose?: CharacterPose;
@@ -95,8 +97,14 @@ export function DeveloperCharacterCanvas({
   prefersReducedMotion = false,
   onLoaded,
 }: DeveloperCharacterCanvasProps) {
-  const [hasWebGLError, setHasWebGLError] = useState(false);
+  const [hasWebGLError, setHasWebGLError] = useState(() => !isWebGLAvailable());
   const [pointerOffset, setPointerOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (!isWebGLAvailable()) {
+      setHasWebGLError(true);
+    }
+  }, []);
 
   // Track cursor / touch for 3D parallax
   useEffect(() => {
@@ -118,48 +126,59 @@ export function DeveloperCharacterCanvas({
   }, [onLoaded]);
 
   // Graceful 2D fallback if client device rejects WebGL
+  const fallbackUI = (
+    <div className={`relative ${className}`}>
+      <picture>
+        <source srcSet="/assets/developer-character.webp" type="image/webp" />
+        <img
+          src="/assets/developer-character.png"
+          alt="Developer seated looking at moon"
+          className="w-full h-full object-contain filter drop-shadow-[0_0_14px_rgba(6,182,212,0.22)]"
+          referrerPolicy="no-referrer"
+        />
+      </picture>
+    </div>
+  );
+
   if (hasWebGLError) {
-    return (
-      <div className={`relative ${className}`}>
-        <picture>
-          <source srcSet="/assets/developer-character.webp" type="image/webp" />
-          <img
-            src="/assets/developer-character.png"
-            alt="Developer seated looking at moon"
-            className="w-full h-full object-contain filter drop-shadow-[0_0_14px_rgba(6,182,212,0.22)]"
-            referrerPolicy="no-referrer"
-          />
-        </picture>
-      </div>
-    );
+    return fallbackUI;
   }
 
   return (
     <div className={`relative select-none pointer-events-none ${className}`}>
-      <Suspense fallback={<CharacterFallback />}>
-        <Canvas
-          gl={{
-            alpha: true,
-            antialias: true,
-            powerPreference: 'high-performance',
-          }}
-          camera={{
-            position: [0, 0.72, 1.85],
-            fov: 38,
-            near: 0.1,
-            far: 20,
-          }}
-          dpr={[1, 2]}
-          onError={() => setHasWebGLError(true)}
-          style={{ width: '100%', height: '100%' }}
-        >
-          <CharacterScene
-            pose={pose}
-            prefersReducedMotion={prefersReducedMotion}
-            pointerOffset={pointerOffset}
-          />
-        </Canvas>
-      </Suspense>
+      <WebGLErrorBoundary fallback={fallbackUI} name="DeveloperCharacterCanvas">
+        <Suspense fallback={<CharacterFallback />}>
+          <Canvas
+            gl={{
+              alpha: true,
+              antialias: true,
+              powerPreference: 'high-performance',
+            }}
+            camera={{
+              position: [0, 0.72, 1.85],
+              fov: 38,
+              near: 0.1,
+              far: 20,
+            }}
+            dpr={[1, 1.5]}
+            onCreated={({ gl }) => {
+              const handleContextLost = (e: Event) => {
+                e.preventDefault();
+                setHasWebGLError(true);
+              };
+              gl.domElement.addEventListener('webglcontextlost', handleContextLost, false);
+            }}
+            onError={() => setHasWebGLError(true)}
+            style={{ width: '100%', height: '100%' }}
+          >
+            <CharacterScene
+              pose={pose}
+              prefersReducedMotion={prefersReducedMotion}
+              pointerOffset={pointerOffset}
+            />
+          </Canvas>
+        </Suspense>
+      </WebGLErrorBoundary>
     </div>
   );
 }

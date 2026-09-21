@@ -1,6 +1,8 @@
 import React, { useMemo, useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { isWebGLAvailable } from '../../../utils/webgl';
+import { WebGLErrorBoundary, WebGLCosmicFallback } from '../../WebGLErrorBoundary';
 
 interface Helix3DCanvasProps {
   activeStageIndex: number;
@@ -297,34 +299,57 @@ export const Helix3DCanvas: React.FC<Helix3DCanvasProps> = ({
   onSelectStage,
   isMobile = false,
 }) => {
+  const [webglSupported, setWebglSupported] = useState<boolean>(() => isWebGLAvailable());
+
+  useEffect(() => {
+    setWebglSupported(isWebGLAvailable());
+  }, []);
+
+  if (!webglSupported) {
+    return (
+      <div className="relative w-full h-[280px] sm:h-[360px] lg:h-[420px] select-none rounded-2xl overflow-hidden bg-slate-950/40 border border-cyan-500/20 backdrop-blur-md shadow-[0_0_40px_rgba(0,245,255,0.08)]">
+        <WebGLCosmicFallback className="w-full h-full" />
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full h-[280px] sm:h-[360px] lg:h-[420px] select-none rounded-2xl overflow-hidden bg-slate-950/40 border border-cyan-500/20 backdrop-blur-md shadow-[0_0_40px_rgba(0,245,255,0.08)]">
-      <Canvas
-        camera={{
-          position: [0, 0, isMobile ? 5.2 : 5.8],
-          fov: isMobile ? 48 : 42,
-          near: 0.1,
-          far: 20,
-        }}
-        dpr={isMobile ? [1, 1.2] : [1, 1.5]}
-        gl={{ antialias: true, alpha: true }}
-      >
-        <ambientLight intensity={0.4} color="#030b1e" />
-        <directionalLight position={[3, 5, 4]} intensity={1.2} color="#ffffff" />
-        <directionalLight position={[-4, -2, 2]} intensity={0.8} color="#00f5ff" />
-        <pointLight position={[0, -2, -2]} intensity={0.6} color="#0284c7" />
+      <WebGLErrorBoundary fallback={<WebGLCosmicFallback className="w-full h-full" />} name="Helix3DCanvas">
+        <Canvas
+          camera={{
+            position: [0, 0, isMobile ? 5.2 : 5.8],
+            fov: isMobile ? 48 : 42,
+            near: 0.1,
+            far: 20,
+          }}
+          dpr={isMobile ? [1, 1.2] : [1, 1.5]}
+          onCreated={({ gl }) => {
+            const handleContextLost = (e: Event) => {
+              e.preventDefault();
+              console.warn('[Helix3DCanvas] WebGL context lost.');
+            };
+            gl.domElement.addEventListener('webglcontextlost', handleContextLost, false);
+          }}
+          gl={{ antialias: true, alpha: true }}
+        >
+          <ambientLight intensity={0.4} color="#030b1e" />
+          <directionalLight position={[3, 5, 4]} intensity={1.2} color="#ffffff" />
+          <directionalLight position={[-4, -2, 2]} intensity={0.8} color="#00f5ff" />
+          <pointLight position={[0, -2, -2]} intensity={0.6} color="#0284c7" />
 
-        {/* Double Helix 3D Object */}
-        <DoubleHelixMesh
-          activeStageIndex={activeStageIndex}
-          visitedStages={visitedStages}
-          onSelectStage={onSelectStage}
-          isMobile={isMobile}
-        />
+          {/* Double Helix 3D Object */}
+          <DoubleHelixMesh
+            activeStageIndex={activeStageIndex}
+            visitedStages={visitedStages}
+            onSelectStage={onSelectStage}
+            isMobile={isMobile}
+          />
 
-        {/* Ambient Cyan Particles */}
-        <HelixParticles count={isMobile ? 40 : 90} isMobile={isMobile} />
-      </Canvas>
+          {/* Ambient Cyan Particles */}
+          <HelixParticles count={isMobile ? 40 : 90} isMobile={isMobile} />
+        </Canvas>
+      </WebGLErrorBoundary>
     </div>
   );
 };

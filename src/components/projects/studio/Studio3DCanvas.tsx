@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { isWebGLAvailable } from '../../../utils/webgl';
 
 interface Studio3DCanvasProps {
   className?: string;
@@ -9,6 +10,7 @@ export const Studio3DCanvas: React.FC<Studio3DCanvasProps> = ({ className = '' }
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!isWebGLAvailable()) return;
     const container = containerRef.current;
     if (!container) return;
 

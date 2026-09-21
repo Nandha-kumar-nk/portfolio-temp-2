@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { ReactorCore3D, SkillNodeData } from '../3d/ReactorCore3D';
 import { isWebGLAvailable } from '../../utils/webgl';
+import { WebGLErrorBoundary, WebGLCosmicFallback } from '../WebGLErrorBoundary';
 import {
   SkillsTab,
   NavSection,
@@ -133,44 +134,44 @@ export function DesktopSkillsLayout({
       */}
       <div ref={containerRef} className="absolute inset-0 w-full h-full z-10" onClick={() => onSelectSkill(null)}>
         {hasWebGLError || !isInView ? (
-          <div className="w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-950/40 via-slate-950 to-[#020617] flex items-center justify-center">
-            <div className="text-center px-4">
-              <div className="w-20 h-20 mx-auto mb-4 rounded-3xl border border-cyan-500/50 bg-cyan-950/30 flex items-center justify-center shadow-[0_0_30px_rgba(0,245,255,0.35)] animate-pulse">
-                <span className="font-orbitron font-bold text-cyan-300 text-xl">NU</span>
-              </div>
-              <p className="text-xs font-mono-code text-cyan-400/80 tracking-widest uppercase">
-                {hasWebGLError ? 'REACTOR CORE 2D MATRIX ACTIVE' : 'REACTOR CORE INITIALIZING'}
-              </p>
-            </div>
-          </div>
+          <WebGLCosmicFallback className="w-full h-full" />
         ) : (
-          <Canvas
-            camera={{ position: [0, 0, 8.0], fov: 55 }}
-            onError={() => setHasWebGLError(true)}
-            gl={{ antialias: true, alpha: true }}
-          >
-            <ambientLight intensity={1.4} />
-            <directionalLight position={[5, 6, 6]} intensity={2.8} />
-            <pointLight position={[-4, -3, -4]} intensity={1.8} color="#00f5ff" />
+          <WebGLErrorBoundary fallback={<WebGLCosmicFallback className="w-full h-full" />} name="DesktopSkillsLayout">
+            <Canvas
+              camera={{ position: [0, 0, 8.0], fov: 55 }}
+              onCreated={({ gl }) => {
+                const handleContextLost = (e: Event) => {
+                  e.preventDefault();
+                  setHasWebGLError(true);
+                };
+                gl.domElement.addEventListener('webglcontextlost', handleContextLost, false);
+              }}
+              onError={() => setHasWebGLError(true)}
+              gl={{ antialias: true, alpha: true }}
+            >
+              <ambientLight intensity={1.4} />
+              <directionalLight position={[5, 6, 6]} intensity={2.8} />
+              <pointLight position={[-4, -3, -4]} intensity={1.8} color="#00f5ff" />
 
-            <ReactorCore3D
-              skills={currentSkills}
-              selectedSkill={selectedSkill}
-              onSelectSkill={(skill) => onSelectSkill(skill)}
-              hoveredSkillId={hoveredSkillId}
-              onHoverSkill={onHoverSkill}
-            />
+              <ReactorCore3D
+                skills={currentSkills}
+                selectedSkill={selectedSkill}
+                onSelectSkill={(skill) => onSelectSkill(skill)}
+                hoveredSkillId={hoveredSkillId}
+                onHoverSkill={onHoverSkill}
+              />
 
-            <OrbitControls
-              enableZoom={false}
-              enablePan={false}
-              maxPolarAngle={Math.PI / 2 + 0.15}
-              minPolarAngle={Math.PI / 2 - 0.15}
-              maxAzimuthAngle={Math.PI / 12}
-              minAzimuthAngle={-Math.PI / 12}
-              rotateSpeed={0.25}
-            />
-          </Canvas>
+              <OrbitControls
+                enableZoom={false}
+                enablePan={false}
+                maxPolarAngle={Math.PI / 2 + 0.15}
+                minPolarAngle={Math.PI / 2 - 0.15}
+                maxAzimuthAngle={Math.PI / 12}
+                minAzimuthAngle={-Math.PI / 12}
+                rotateSpeed={0.25}
+              />
+            </Canvas>
+          </WebGLErrorBoundary>
         )}
       </div>
 

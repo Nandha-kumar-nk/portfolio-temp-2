@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { ProjectItem } from '../../../data/projectsData';
 import { PROJECT_THEMES } from './types';
+import { isWebGLAvailable } from '../../../utils/webgl';
 
 interface ArenaEnvironmentProps {
   activeProject: ProjectItem;
@@ -21,6 +22,7 @@ export const ArenaEnvironment: React.FC<ArenaEnvironmentProps> = ({
   const activeTheme = PROJECT_THEMES[activeProject.id] || PROJECT_THEMES['swayam-2'];
 
   useEffect(() => {
+    if (!isWebGLAvailable()) return;
     const container = containerRef.current;
     if (!container) return;
 

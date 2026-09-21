@@ -13,6 +13,7 @@ import { ProjectsScene } from './components/ProjectsScene';
 import { ContactSection } from './components/ContactSection';
 import { GalaxyBackground } from './components/backgrounds/GalaxyBackground';
 import { soundEngine } from './utils/audio';
+import { WebGLErrorBoundary } from './components/WebGLErrorBoundary';
 
 // Universe Pulse Phase 3 Section Settling Motion Wrapper
 function UniverseSection({
@@ -268,13 +269,15 @@ export default function App() {
           className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden"
           style={{ background: 'transparent' }}
         >
-          <ExperienceCanvas
-            currentScene={currentScene}
-            transitionProgress={transitionProgress}
-            quality={quality}
-            scrollSectionProgress={scrollState.scrollSectionProgress}
-            mousePos={scrollState.mousePos}
-          />
+          <WebGLErrorBoundary name="AppExperienceCanvas">
+            <ExperienceCanvas
+              currentScene={currentScene}
+              transitionProgress={transitionProgress}
+              quality={quality}
+              scrollSectionProgress={scrollState.scrollSectionProgress}
+              mousePos={scrollState.mousePos}
+            />
+          </WebGLErrorBoundary>
         </div>
       )}
 

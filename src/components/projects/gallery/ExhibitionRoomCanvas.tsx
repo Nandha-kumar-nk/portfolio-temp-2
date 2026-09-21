@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
+import { isWebGLAvailable } from '../../../utils/webgl';
 
 interface ExhibitionRoomCanvasProps {
   activeProjectId: string;
@@ -21,6 +22,7 @@ export const ExhibitionRoomCanvas: React.FC<ExhibitionRoomCanvasProps> = ({
   });
 
   useEffect(() => {
+    if (!isWebGLAvailable()) return;
     const container = containerRef.current;
     if (!container) return;
 

@@ -19,18 +19,8 @@ interface ProjectCubeCanvasProps {
   prefersReducedMotion?: boolean;
 }
 
-function checkWebGLSupport(): boolean {
-  if (typeof window === 'undefined') return true;
-  try {
-    const canvas = document.createElement('canvas');
-    return !!(
-      window.WebGLRenderingContext &&
-      (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
-    );
-  } catch (_e) {
-    return false;
-  }
-}
+import { isWebGLAvailable } from '../../../utils/webgl';
+import { WebGLErrorBoundary, WebGLCosmicFallback } from '../../WebGLErrorBoundary';
 
 function ContextEventListener({ setHasRenderError }: { setHasRenderError: (val: boolean) => void }) {
   const { gl } = useThree();
@@ -65,13 +55,11 @@ export const ProjectCubeCanvas: React.FC<ProjectCubeCanvasProps> = (props) => {
   const { isActive = true } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState<boolean>(true);
-  const [hasWebGL, setHasWebGL] = useState<boolean>(true);
+  const [hasWebGL, setHasWebGL] = useState<boolean>(() => isWebGLAvailable());
   const [hasRenderError, setHasRenderError] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!checkWebGLSupport()) {
-      setHasWebGL(false);
-    }
+    setHasWebGL(isWebGLAvailable());
   }, []);
 
   useEffect(() => {
@@ -88,38 +76,36 @@ export const ProjectCubeCanvas: React.FC<ProjectCubeCanvasProps> = (props) => {
     return () => observer.disconnect();
   }, []);
 
-  if (!hasWebGL || hasRenderError) {
+  if (!hasWebGL || hasRenderError || !isInView) {
     return (
       <div ref={containerRef} className="w-full h-full flex items-center justify-center p-4">
-        <div className="w-32 h-32 rounded-2xl border border-cyan-500/50 bg-slate-900/80 flex items-center justify-center shadow-[0_0_25px_rgba(0,245,255,0.3)]">
-          <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest">
-            {props.project.doorNumber || '02'}
-          </span>
-        </div>
+        <WebGLCosmicFallback className="w-full h-full" />
       </div>
     );
   }
 
   return (
     <div ref={containerRef} className="relative w-full h-full select-none pointer-events-auto flex items-center justify-center">
-      <Canvas
-        camera={{
-          position: [0, 0.05, props.isMobile ? 3.8 : 3.5],
-          fov: props.isMobile ? 38 : 32,
-          near: 0.1,
-          far: 50,
-        }}
-        dpr={props.isMobile ? [1, 1] : [1, 1.5]}
-        gl={{
-          antialias: true,
-          alpha: true,
-          powerPreference: props.isMobile ? 'low-power' : 'high-performance',
-        }}
-        style={{ pointerEvents: 'auto', width: '100%', height: '100%' }}
-      >
-        <ContextEventListener setHasRenderError={setHasRenderError} />
-        <CubeSceneController {...props} />
-      </Canvas>
+      <WebGLErrorBoundary fallback={<WebGLCosmicFallback className="w-full h-full" />} name="ProjectCubeCanvas">
+        <Canvas
+          camera={{
+            position: [0, 0.05, props.isMobile ? 3.8 : 3.5],
+            fov: props.isMobile ? 38 : 32,
+            near: 0.1,
+            far: 50,
+          }}
+          dpr={props.isMobile ? [1, 1] : [1, 1.5]}
+          gl={{
+            antialias: true,
+            alpha: true,
+            powerPreference: props.isMobile ? 'low-power' : 'high-performance',
+          }}
+          style={{ pointerEvents: 'auto', width: '100%', height: '100%' }}
+        >
+          <ContextEventListener setHasRenderError={setHasRenderError} />
+          <CubeSceneController {...props} />
+        </Canvas>
+      </WebGLErrorBoundary>
     </div>
   );
 };

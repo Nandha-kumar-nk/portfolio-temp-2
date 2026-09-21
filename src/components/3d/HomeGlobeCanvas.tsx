@@ -4,6 +4,8 @@ import { Html } from '@react-three/drei';
 import * as THREE from 'three';
 import { Code2, Lightbulb, Box, Cpu, Rocket, Target } from 'lucide-react';
 import { generateEarthTextures, latLonToVector3 } from '../../utils/earthTexture';
+import { isWebGLAvailable } from '../../utils/webgl';
+import { WebGLErrorBoundary, WebGLCosmicFallback } from '../WebGLErrorBoundary';
 
 export interface HomeGlobeCanvasProps {
   isMobile?: boolean;
@@ -562,37 +564,63 @@ export const HomeGlobeCanvas: React.FC<HomeGlobeCanvasProps> = ({
   prefersReducedMotion = false,
   isExploring = false,
 }) => {
+  const [webglSupported, setWebglSupported] = React.useState<boolean>(() => isWebGLAvailable());
+
+  React.useEffect(() => {
+    setWebglSupported(isWebGLAvailable());
+  }, []);
+
+  if (!webglSupported) {
+    return (
+      <div
+        id="home-3d-globe-wrapper"
+        className="w-full h-full relative pointer-events-auto select-none overflow-hidden"
+      >
+        <WebGLCosmicFallback />
+      </div>
+    );
+  }
+
   return (
     <div
       id="home-3d-globe-wrapper"
       className="w-full h-full relative pointer-events-auto select-none overflow-hidden"
     >
-      <Canvas
-        camera={{ position: [0, 0, 4.1], fov: 45 }}
-        dpr={isMobile ? [1, 1.5] : [1, 2]}
-        gl={{
-          alpha: true,
-          antialias: !isMobile,
-          powerPreference: isMobile ? 'low-power' : 'high-performance',
-          toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.35,
-        }}
-        className="w-full h-full cursor-grab active:cursor-grabbing"
-      >
-        {/* Futuristic Studio Lighting */}
-        <ambientLight intensity={0.8} color="#041C2E" />
-        <pointLight position={[0, 1.8, 3.8]} intensity={3.0} color="#00E5FF" />
-        <directionalLight position={[-3.8, 2.5, 2.2]} intensity={2.0} color="#168BFF" />
-        <pointLight position={[3.6, -1.5, 2.0]} intensity={1.5} color="#7C5CFF" />
-        <pointLight position={[0, -2.4, 1.4]} intensity={2.2} color="#00E5FF" />
+      <WebGLErrorBoundary fallback={<WebGLCosmicFallback />} name="HomeGlobeCanvas">
+        <Canvas
+          camera={{ position: [0, 0, 4.1], fov: 45 }}
+          dpr={isMobile ? [1, 1.2] : [1, 1.5]}
+          onCreated={({ gl }) => {
+            const handleContextLost = (e: Event) => {
+              e.preventDefault();
+              console.warn('[HomeGlobeCanvas] WebGL context lost.');
+            };
+            gl.domElement.addEventListener('webglcontextlost', handleContextLost, false);
+          }}
+          gl={{
+            alpha: true,
+            antialias: !isMobile,
+            powerPreference: isMobile ? 'low-power' : 'high-performance',
+            toneMapping: THREE.ACESFilmicToneMapping,
+            toneMappingExposure: 1.35,
+          }}
+          className="w-full h-full cursor-grab active:cursor-grabbing"
+        >
+          {/* Futuristic Studio Lighting */}
+          <ambientLight intensity={0.8} color="#041C2E" />
+          <pointLight position={[0, 1.8, 3.8]} intensity={3.0} color="#00E5FF" />
+          <directionalLight position={[-3.8, 2.5, 2.2]} intensity={2.0} color="#168BFF" />
+          <pointLight position={[3.6, -1.5, 2.0]} intensity={1.5} color="#7C5CFF" />
+          <pointLight position={[0, -2.4, 1.4]} intensity={2.2} color="#00E5FF" />
 
-        {/* Scene Rig */}
-        <SceneRig
-          isMobile={isMobile}
-          prefersReducedMotion={prefersReducedMotion}
-          isExploring={isExploring}
-        />
-      </Canvas>
+          {/* Scene Rig */}
+          <SceneRig
+            isMobile={isMobile}
+            prefersReducedMotion={prefersReducedMotion}
+            isExploring={isExploring}
+          />
+        </Canvas>
+      </WebGLErrorBoundary>
     </div>
   );
 };
